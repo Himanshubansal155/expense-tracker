@@ -1,3 +1,5 @@
+import Login from "./components/Login/Login";
+
 function App() {
   return (
     <div>
@@ -12,6 +14,7 @@ function App() {
       >
         Learn React
       </a>
+      <Login />
     </div>
   );
 }
