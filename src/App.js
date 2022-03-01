@@ -1,5 +1,6 @@
 import Login from "./components/Login/Login";
 import Signup from "./components/signup/signup";
+import NavigationPage from "./components/NavigationPage/NavigationPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <div>
         <Signup />
       </div>
+      <NavigationPage />
     </div>
     
     
