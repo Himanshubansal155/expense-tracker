@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AUTH_TOKEN, BASE_URL } from "../constants/secrets";
-import { post } from "./base.api";
+import { get } from "./base.api";
 
 export const signup = async (data) => {
   const url = BASE_URL + "signup";
@@ -28,7 +28,7 @@ export const logout = () => {
 export const me = async () => {
   try {
     const url = BASE_URL + "me";
-    const response = await post(url);
+    const response = await get(url);
     return response.data;
   } catch (error) {
     throw new Error(error.data.message);
