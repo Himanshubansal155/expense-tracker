@@ -16,14 +16,14 @@ const NavigationPage = () => {
       {loginStatus === LOGGED_OUT ? (
         <Routes>
           <Route path={`/`} element={<HomePage />} />
-          <Route path={`/dashboard`} element={<HomePage />} />
+          <Route path={ROUTES.WELCOME} element={<HomePage />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path="*" element={<div>Not Found 404</div>} />
         </Routes>
       ) : (
         <Routes>
           <Route path={`/`} element={<Dashboard />} />
-          <Route path={`/dashboard`} element={<Dashboard />} />
+          <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
           <Route path="*" element={<div>Not Found 404</div>} />
         </Routes>
       )}
