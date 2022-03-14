@@ -24,9 +24,14 @@ export const authSlice = createSlice({
       state.loginStatus = LOGGED_OUT;
       state.error = action.payload.message;
     },
+    logoutUser: (state) => {
+      state.data = undefined;
+      state.loginStatus = LOGGED_OUT;
+      state.error = undefined;
+    },
   },
 });
 
-export const { loginCompleted, loginError, fetchCompleted } = authSlice.actions;
+export const { loginCompleted, loginError, fetchCompleted, logoutUser } = authSlice.actions;
 
 export default authSlice.reducer;
