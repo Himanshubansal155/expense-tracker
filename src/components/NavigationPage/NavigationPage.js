@@ -6,8 +6,8 @@ import { ROUTES } from "../../constants/Routes";
 import Dashboard from "../Dashboard/Dashboard";
 import HomePage from "../Home/HomePage";
 import Login from "../Login/Login";
+import SignUp from "../signup/signup";
 import Speechly from "../Speechly/Speechly";
-import SignUp from "../SignUp/SignUp";
 
 
 const NavigationPage = () => {

@@ -70,7 +70,7 @@ const Speechly = () => {
       <ErrorPanel placement="bottom" />
       <PushToTalkButton
         // gradientStops={["#508CFF", "#009FFA", "#00E48F"]}
-        // size="0px"
+        size="0px"
         showTime={2000}
         tapToTalkTime={0}
         placement={"top"}
