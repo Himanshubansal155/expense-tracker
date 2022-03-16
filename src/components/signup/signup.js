@@ -32,7 +32,7 @@ const formik = useFormik({
           </div>
           
           <div className='flex justify-end mr-12'>
-          <form className='flex flex-col justify-center items-center border-4 border-green mt-10 mr-40 bg-purple-100'  onSubmit={formik.handleSubmit}  action=''>
+          <form className='flex flex-col justify-center items-center border-4 border-green mt-10 mr-40 bg-purple-500'  onSubmit={formik.handleSubmit}  action=''>
           <div>
               
               <Input type="text"  name='name'  label="Name" onChange={formik.handleChange} value={formik.values.name}></Input>
