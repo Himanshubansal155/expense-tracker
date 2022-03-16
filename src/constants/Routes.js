@@ -3,4 +3,5 @@ export const ROUTES = {
   REGISTER: "register",
   DASHBOARD: "dashboard",
   WELCOME: "welcome",
+  SIGNUP:"signup",
 };
