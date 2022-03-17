@@ -6,6 +6,8 @@ import ButtonField from "../shared components/Button/Button";
 import Input from "../shared components/Input/Input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { COLORS } from "../../constants/Colors";
+import { ROUTES } from "../../constants/Routes";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const Login = () => {
     }),
     onSubmit: (values) => {},
   });
-  // useEffect(() => {
+  // useEffect(() => {3000
   //   dispatch({
   //     type: ME_LOGIN,
   //     payload: {
@@ -33,30 +35,29 @@ const Login = () => {
   //   navigate("/");
   // }, []);
   return (
-    <div className=" h-screen bg-white flex">
-      <div className=" h-screen bg-purple-700 w-2/5 ">
-        <div className=" h-3/4 w-3/4 float-right bg-purple-700 mt-20 shadow-2xl">
-          {" "}
-        </div>
+    <div className="h-screen bg-white flex flex-col md:flex-row">
+      <div className="h-screen bg-purple-700 md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
+        <div className="h-3/4 w-3/4 bg-purple-700 md:mt-20 shadow-2xl"> </div>
       </div>
-      <div className=" h-screen bg-white w-3/5 ">
-        <div className=" h-3/4 w-3/4 float-left bg-white mt-20 shadow-2xl">
+      <div className="h-screen bg-white md:w-3/5 ">
+        <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white p-10 md:mt-20 shadow-2xl">
           <div className="">
             <form
               action="#"
               className="flex flex-col w-full items-center"
               onSubmit={formik.handleSubmit}
             >
-              <div className=" mt-24">
+              <div className="md:mt-24">
                 <h1 className="text-black text-2xl ">Log In</h1>
               </div>
 
-              <div className="form-group w-1/2  mt-10">
+              <div className="form-group w-3/4 lg:w-2/3  mt-10">
                 <Input
                   type="text"
                   label="Username"
+                  name="username"
                   required
-                  onchange={formik.handleChange}
+                  onChange={formik.handleChange}
                   value={formik.values.username}
                   onBlur={formik.handleBlur}
                 />
@@ -64,25 +65,21 @@ const Login = () => {
                   <p>{formik.errors.username}</p>
                 ) : null}
               </div>
-              <div className="form-group w-1/2  mt-10">
+              <div className="form-group w-3/4 lg:w-2/3  mt-10">
                 <Input
                   type="password"
                   label="Password"
+                  name="password"
                   required
-                  onchange={formik.handleChange}
+                  onChange={formik.handleChange}
                   value={formik.values.password}
                 />
               </div>
-              <div>
-                <a className="no-underline float-right" href="/">
-                  <p className="text-xs text-gray-600">Forget Password!</p>
-                </a>
-              </div>
-              <div className="form-group mt-10">
+              <div className="form-group mt-10 flex justify-between">
                 <ButtonField
-                  buttonStyle={{
+                  buttonstyle={{
                     margin: 10,
-                    backgroundColor: "rgb(109, 40, 217)",
+                    backgroundColor: COLORS.primary,
                     borderRadius: 20,
                     width: "100%",
                     color: "white",
@@ -92,13 +89,21 @@ const Login = () => {
                     paddingTop: 8,
                     paddingBottom: 8,
                   }}
-                  hoverStyle={{ backgroundColor: "rgb(91, 33, 182)" }}
+                  hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
                   type="submit"
                 >
                   Login
                 </ButtonField>
               </div>
             </form>
+            <div className="flex flex-col sm:flex-row justify-between items-center mx-5 md:mx-2 lg:mx-10">
+              <a className="no-underline" href={ROUTES.REGISTER}>
+                <p className="text-xs text-gray-600">Create an account?</p>
+              </a>
+              <a className="no-underline" href={ROUTES.REGISTER}>
+                <p className="text-xs text-gray-600">Forget Password</p>
+              </a>
+            </div>
           </div>
         </div>
       </div>

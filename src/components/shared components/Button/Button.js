@@ -4,8 +4,8 @@ import { styled } from "@mui/material/styles";
 
 const ButtonField = (props) => {
   const BootstrapButton = styled(Button)({
-    ...props.buttonStyle,
-    "&:hover": props.hoverStyle,
+    ...props.buttonstyle,
+    "&:hover": props.hoverstyle,
   });
   return (
     <div>
