@@ -19,6 +19,7 @@ const Login = () => {
       username: Yup.string()
         .max(30, "Must be 30 characters or less")
         .required("Required"),
+      password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {},
   });
@@ -71,7 +72,11 @@ const Login = () => {
                   required
                   onchange={formik.handleChange}
                   value={formik.values.password}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.password && formik.errors.password ? (
+                  <p>{formik.errors.password}</p>
+                ) : null}
               </div>
               <div>
                 <a className="no-underline float-right" href="/">
