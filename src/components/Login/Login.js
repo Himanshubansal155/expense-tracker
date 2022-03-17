@@ -2,21 +2,22 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ME_LOGIN } from "../../constants/action.constants";
+import ButtonField from "../shared components/Button/Button";
 import Input from "../shared components/Input/Input";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch({
-      type: ME_LOGIN,
-      payload: {
-        email: "himanshubansal1@gmail.com",
-        password: "123456",
-      },
-    });
-    navigate("/");
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: ME_LOGIN,
+  //     payload: {
+  //       email: "himanshubansal1@gmail.com",
+  //       password: "123456",
+  //     },
+  //   });
+  //   navigate("/");
+  // }, []);
   return (
     <div className=" h-screen bg-white flex">
       <div className=" h-screen bg-purple-700 w-2/5 ">
@@ -33,39 +34,35 @@ const Login = () => {
               </div>
 
               <div className="form-group w-1/2  mt-10">
-                <label className="label" for="name">
-                  Username
-                </label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  label="Username"
-                  required
-                />
+                <Input type="text" label="Username" required />
               </div>
               <div className="form-group w-1/2  mt-10">
-                <label className="label" for="password">
-                  Password
-                </label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  label="password"
-                  required
-                />
+                <Input type="password" label="Password" required />
               </div>
               <div>
-                <a classname="no-underline float-right" href="#">
+                <a className="no-underline float-right" href="/">
                   <p className="text-xs text-gray-600">Forget Password!</p>
                 </a>
               </div>
               <div className="form-group mt-10">
-                <button
+                <ButtonField
+                  buttonStyle={{
+                    margin: 10,
+                    backgroundColor: "rgb(109, 40, 217)",
+                    borderRadius: 20,
+                    width: "100%",
+                    color: "white",
+                    fontWeight: "bold",
+                    paddingLeft: 40,
+                    paddingRight: 40,
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                  }}
+                  hoverStyle={{ backgroundColor: "rgb(91, 33, 182)" }}
                   type="submit"
-                  className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-full"
                 >
                   Login
-                </button>
+                </ButtonField>
               </div>
             </form>
           </div>

@@ -1,12 +1,17 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const ButtonField = (props) => {
+  const BootstrapButton = styled(Button)({
+    ...props.buttonStyle,
+    "&:hover": props.hoverStyle,
+  });
   return (
     <div>
-      <Button variant={props.variant || "contained"} {...props}>
+      <BootstrapButton variant={props.variant || "contained"} {...props}>
         {props.children}
-      </Button>
+      </BootstrapButton>
     </div>
   );
 };
