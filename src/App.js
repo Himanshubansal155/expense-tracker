@@ -5,6 +5,7 @@ import { ME_FETCH } from "./constants/action.constants";
 import { AUTH_TOKEN } from "./constants/secrets";
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
+// import "./fonts.scss";
 
 function App() {
   const dispatch = useDispatch();
