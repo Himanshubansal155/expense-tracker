@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonField from "../shared components/Button/Button";
 import Input from "../shared components/Input/Input";
 import { useFormik } from "formik";
@@ -24,7 +24,7 @@ const Login = () => {
         .email("Must be a valid email")
         .max(30, "Must be 30 characters or less")
         .required("Email is Required"),
-      password: Yup.string().required("Required"),
+      password: Yup.string().required("Password is Required"),
     }),
     onSubmit: async (values) => {
       dispatch(
@@ -60,10 +60,8 @@ const Login = () => {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                   onBlur={formik.handleBlur}
+                  errorfield={formik.touched.email && formik.errors.email}
                 />
-                {formik.touched.email && formik.errors.email && (
-                  <p className="text-red-700">{formik.errors.email}</p>
-                )}
               </div>
               <div className="form-group w-3/4 lg:w-2/3  mt-10">
                 <Input
@@ -74,18 +72,14 @@ const Login = () => {
                   onChange={formik.handleChange}
                   value={formik.values.password}
                   onBlur={formik.handleBlur}
+                  errorfield={formik.touched.password && formik.errors.password}
                 />
-                {formik.touched.password && formik.errors.password && (
-                  <p className="text-red-700">{formik.errors.password}</p>
-                )}
               </div>
               <div className="form-group mt-10 flex justify-between">
                 <ButtonField
                   buttonstyle={{
-                    margin: 10,
                     backgroundColor: COLORS.primary,
                     borderRadius: 20,
-                    width: "100%",
                     color: "white",
                     fontWeight: "bold",
                     paddingLeft: 40,
@@ -94,7 +88,6 @@ const Login = () => {
                     paddingBottom: 8,
                   }}
                   hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
-                  // type="submit"
                   onClick={formik.handleSubmit}
                 >
                   Login
@@ -104,13 +97,13 @@ const Login = () => {
                 </ButtonField>
               </div>
             </form>
-            <div className="flex flex-col sm:flex-row justify-between items-center mx-5 md:mx-2 lg:mx-10">
-              <a className="no-underline" href={ROUTES.REGISTER}>
+            <div className="flex flex-col sm:flex-row justify-between items-center mx-5 md:mx-2 lg:mx-10 mt-2">
+              <Link to={ROUTES.SIGNUP}>
                 <p className="text-xs text-gray-600">Create an account?</p>
-              </a>
-              <a className="no-underline" href={ROUTES.REGISTER}>
+              </Link>
+              <Link to={ROUTES.REGISTER}>
                 <p className="text-xs text-gray-600">Forget Password</p>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
