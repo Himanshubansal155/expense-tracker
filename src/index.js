@@ -9,15 +9,13 @@ import store from "./store/store";
 import { SpeechProvider } from "@speechly/react-client";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <SpeechProvider appId="523cafb9-36bd-4449-b10a-c9c1af591908">
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </SpeechProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <SpeechProvider appId="523cafb9-36bd-4449-b10a-c9c1af591908">
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </SpeechProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
