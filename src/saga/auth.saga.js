@@ -6,13 +6,18 @@ import {
   loginCompleted,
   loginError,
   logoutUser,
+  loginStart,
+  fetchStart,
 } from "../Reducers/AuthReducer";
 import toastService from "../services/toastService";
 
 export function* addUser(action) {
   try {
-    const meResponse = yield call(login, action.payload);
+    yield put(loginStart());
+    const meResponse = yield call(login, action.payload.data);
     yield put(loginCompleted(meResponse));
+    action.payload.navigator("/");
+    toastService.showtoast("Logged in Successfully");
   } catch (error) {
     toastService.showErrorToast(error.message);
     yield put(loginError(error));
@@ -30,6 +35,7 @@ export function* watchLoginUserChanged() {
 
 export function* fetchUser(action) {
   try {
+    yield put(fetchStart());
     const meData = yield call(me);
     yield put(fetchCompleted(meData));
   } catch (error) {

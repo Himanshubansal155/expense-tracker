@@ -1,40 +1,43 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ME_LOGIN } from "../../constants/action.constants";
 import ButtonField from "../shared components/Button/Button";
 import Input from "../shared components/Input/Input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { COLORS } from "../../constants/Colors";
 import { ROUTES } from "../../constants/Routes";
+import { CircularProgress } from "@mui/material";
+import { userLoginAction } from "../../actions/auth.actions";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state?.user);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string()
+      email: Yup.string()
+        .email("Must be a valid email")
         .max(30, "Must be 30 characters or less")
-        .required("Required"),
+        .required("Email is Required"),
       password: Yup.string().required("Required"),
     }),
-    onSubmit: (values) => {},
+    onSubmit: async (values) => {
+      dispatch(
+        userLoginAction(
+          {
+            email: values.email,
+            password: values.password,
+          },
+          navigate
+        )
+      );
+    },
   });
-  // useEffect(() => {3000
-  //   dispatch({
-  //     type: ME_LOGIN,
-  //     payload: {
-  //       email: "himanshubansal1@gmail.com",
-  //       password: "123456",
-  //     },
-  //   });
-  //   navigate("/");
-  // }, []);
   return (
     <div className="h-screen bg-white flex flex-col md:flex-row">
       <div className="h-screen bg-purple-700 md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
@@ -43,11 +46,7 @@ const Login = () => {
       <div className="h-screen bg-white md:w-3/5 ">
         <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white p-10 md:mt-20 shadow-2xl">
           <div className="">
-            <form
-              action="#"
-              className="flex flex-col w-full items-center"
-              onSubmit={formik.handleSubmit}
-            >
+            <form className="flex flex-col w-full items-center">
               <div className="md:mt-24">
                 <h1 className="text-black text-2xl ">Log In</h1>
               </div>
@@ -55,16 +54,16 @@ const Login = () => {
               <div className="form-group w-3/4 lg:w-2/3  mt-10">
                 <Input
                   type="text"
-                  label="Username"
-                  name="username"
+                  label="Email"
+                  name="email"
                   required
                   onChange={formik.handleChange}
-                  value={formik.values.username}
+                  value={formik.values.email}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.username && formik.errors.username ? (
-                  <p>{formik.errors.username}</p>
-                ) : null}
+                {formik.touched.email && formik.errors.email && (
+                  <p className="text-red-700">{formik.errors.email}</p>
+                )}
               </div>
               <div className="form-group w-3/4 lg:w-2/3  mt-10">
                 <Input
@@ -76,9 +75,9 @@ const Login = () => {
                   value={formik.values.password}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.password && formik.errors.password ? (
-                  <p>{formik.errors.password}</p>
-                ) : null}
+                {formik.touched.password && formik.errors.password && (
+                  <p className="text-red-700">{formik.errors.password}</p>
+                )}
               </div>
               <div className="form-group mt-10 flex justify-between">
                 <ButtonField
@@ -95,9 +94,13 @@ const Login = () => {
                     paddingBottom: 8,
                   }}
                   hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
-                  type="submit"
+                  // type="submit"
+                  onClick={formik.handleSubmit}
                 >
                   Login
+                  {user.isLoading && (
+                    <CircularProgress size={20} color="inherit" />
+                  )}
                 </ButtonField>
               </div>
             </form>
