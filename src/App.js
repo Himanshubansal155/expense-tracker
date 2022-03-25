@@ -22,10 +22,14 @@ function App() {
     return <div className="text-blue-600">Loading...</div>;
   }
   return (
+    
     <div>
       <NotificationContainer />
       <NavigationPage />
     </div>
+    
+    
+    
   );
 }
 

@@ -36,7 +36,7 @@ const Speechly = () => {
         case "UP":
         case "SIGNUP":
         case "REGISTER":
-          navigate(ROUTES.REGISTER);
+          navigate(ROUTES.SIGNUP);
           break;
         case "DASHBOARD":
         case "HOME":
