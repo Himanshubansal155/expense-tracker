@@ -8,6 +8,7 @@ import { CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { userSignUpAction } from "../../actions/auth.actions";
 
 const SignUp = () => {
   const user = useSelector((state) => state?.user);
@@ -33,7 +34,7 @@ const SignUp = () => {
       password: Yup.string().required("Password is Required"),
     }),
     onSubmit: (values) => {
-      console.log("Form Data", values);
+      dispatch(userSignUpAction(values, navigate));
     },
   });
 
@@ -75,7 +76,7 @@ const SignUp = () => {
                 </div>
                 <div className="form-group w-3/4 lg:w-2/3 mt-5">
                   <Input
-                    type="number"
+                    type="text"
                     label="Phone No."
                     name="phone"
                     required

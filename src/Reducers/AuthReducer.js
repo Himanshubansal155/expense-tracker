@@ -11,10 +11,7 @@ export const authSlice = createSlice({
   name: "me",
   initialState,
   reducers: {
-    fetchStart: (state) => {
-      state.isLoading = true;
-    },
-    loginStart: (state) => {
+    loading: (state) => {
       state.isLoading = true;
     },
     fetchCompleted: (state, action) => {
@@ -22,12 +19,14 @@ export const authSlice = createSlice({
       state.loginStatus = LOGGED_IN;
       state.isLoading = false;
       state.data = user;
+      state.error = undefined;
     },
     loginCompleted: (state, action) => {
       const user = action.payload;
       state.loginStatus = LOGGED_IN;
       state.isLoading = false;
       state.data = user;
+      state.error = undefined;
     },
     loginError: (state, action) => {
       state.loginStatus = LOGGED_OUT;
@@ -48,8 +47,7 @@ export const {
   loginError,
   fetchCompleted,
   logoutUser,
-  loginStart,
-  fetchStart,
+  loading,
 } = authSlice.actions;
 
 export default authSlice.reducer;
