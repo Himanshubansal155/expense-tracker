@@ -1,43 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
+import SignupForm from "./SignupForm";
+import OTPInput, { ResendOTP } from "otp-input-react";
 import ButtonField from "../shared components/Button/Button";
-import Input from "../shared components/Input/Input";
-import { useFormik } from "formik";
-import { ROUTES } from "../../constants/Routes";
-import { COLORS } from "../../constants/Colors";
 import { CircularProgress } from "@mui/material";
+import { COLORS } from "../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
+import toastService from "./../../services/toastService";
 import { userSignUpAction } from "../../actions/auth.actions";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const user = useSelector((state) => state?.user);
+  const [form, setForm] = useState(null);
+  const [recaptchaVerifier, setRecaptchaVerifier] = useState(null);
+  const [confirmationResult, setConfirmationResult] = useState(null);
+  const [otp, setotp] = useState(null);
+  const auth = getAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Name is required"),
-      email: Yup.string()
-        .email("Must be a valid email")
-        .max(30, "Must be 30 characters or less")
-        .required("Email is Required"),
-      phone: Yup.string()
-        .min(10, "Phone no. nust be valid")
-        .max(10, "Phone no. nust be valid")
-        .required("Phone no. is Required"),
-      password: Yup.string().required("Password is Required"),
-    }),
-    onSubmit: (values) => {
-      dispatch(userSignUpAction(values, navigate));
-    },
-  });
-
+  const user = useSelector((state) => state?.user);
+  const signInOtp = (values) => {
+    if (!values) {
+      setForm(null);
+      return;
+    }
+    setForm(values);
+    try {
+      const verifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        { size: "invisible" },
+        auth
+      );
+      setRecaptchaVerifier(verifier);
+      signInCall(values, verifier);
+    } catch (error) {
+      toastService.showErrorToast(error.message);
+      console.log(error);
+    }
+  };
+  const signInCall = (values, verifier) => {
+    console.log(auth, verifier || recaptchaVerifier);
+    signInWithPhoneNumber(
+      auth,
+      `+91${values.phone}`,
+      verifier || recaptchaVerifier
+    )
+      .then((confirmationResult) => {
+        setConfirmationResult(confirmationResult);
+      })
+      .catch((error) => {
+        setForm(null);
+        toastService.showErrorToast(error.message);
+        console.log(error);
+      });
+  };
+  const verifyAndSignUp = () => {
+    if (confirmationResult) {
+      confirmationResult
+        .confirm(otp)
+        .then((result) => {
+          dispatch(userSignUpAction(form, navigate));
+        })
+        .catch((error) => {
+          toastService.showErrorToast(error.message);
+          console.log(error.message);
+        });
+    }
+  };
   return (
     <>
       <div className="h-screen bg-white flex flex-col md:flex-row">
@@ -46,90 +79,52 @@ const SignUp = () => {
         </div>
 
         <div className="h-screen bg-white md:w-3/5 ">
+          <div id="recaptcha-container"></div>
           <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white py-4 sm:p-10 md:mt-20 shadow-2xl">
-            <div className="">
-              <form className="flex flex-col w-full items-center">
-                <h1 className="text-black text-2xl ">Sign Up</h1>
-                <div className="form-group w-3/4 lg:w-2/3 mt-10">
-                  <Input
-                    type="text"
-                    label="Name"
-                    name="name"
-                    required
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                    onBlur={formik.handleBlur}
-                    errorfield={formik.touched.name && formik.errors.name}
+            {!form ? (
+              <SignupForm onSubmit={signInOtp} />
+            ) : (
+              <div className="flex flex-col items-center h-full justify-center space-y-5">
+                <h1>Verify Phone Number</h1>
+                <div className="flex flex-col w-full items-center">
+                  <OTPInput
+                    value={otp}
+                    onChange={setotp}
+                    autoFocus
+                    OTPLength={6}
+                    otpType="number"
+                    className="border border-gray-100"
+                    placeholder={0}
                   />
-                </div>
-                <div className="form-group w-3/4 lg:w-2/3 mt-5">
-                  <Input
-                    type="email"
-                    label="Email"
-                    name="email"
-                    required
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                    onBlur={formik.handleBlur}
-                    errorfield={formik.touched.email && formik.errors.email}
+                  <ResendOTP
+                    onResendClick={() => signInCall(form)}
+                    onTimerComplete={() => setConfirmationResult(null)}
                   />
+
+                  <div className="form-group mt-10 flex justify-between">
+                    <ButtonField
+                      buttonstyle={{
+                        backgroundColor: COLORS.primary,
+                        borderRadius: 20,
+                        color: "white",
+                        fontWeight: "bold",
+                        paddingLeft: 40,
+                        paddingRight: 40,
+                        paddingTop: 8,
+                        paddingBottom: 8,
+                      }}
+                      hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
+                      onClick={verifyAndSignUp}
+                    >
+                      Verify
+                      {user.isLoading && (
+                        <CircularProgress size={20} color="inherit" />
+                      )}
+                    </ButtonField>
+                  </div>
                 </div>
-                <div className="form-group w-3/4 lg:w-2/3 mt-5">
-                  <Input
-                    type="text"
-                    label="Phone No."
-                    name="phone"
-                    required
-                    onChange={formik.handleChange}
-                    value={formik.values.phone}
-                    onBlur={formik.handleBlur}
-                    errorfield={formik.touched.phone && formik.errors.phone}
-                  />
-                </div>
-                <div className="form-group w-3/4 lg:w-2/3 mt-5">
-                  <Input
-                    type="password"
-                    label="Password"
-                    name="password"
-                    required
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                    onBlur={formik.handleBlur}
-                    errorfield={
-                      formik.touched.password && formik.errors.password
-                    }
-                  />
-                </div>
-                <div className="form-group mt-10 flex justify-between">
-                  <ButtonField
-                    buttonstyle={{
-                      backgroundColor: COLORS.primary,
-                      borderRadius: 20,
-                      color: "white",
-                      fontWeight: "bold",
-                      paddingLeft: 40,
-                      paddingRight: 40,
-                      paddingTop: 8,
-                      paddingBottom: 8,
-                    }}
-                    hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
-                    onClick={formik.handleSubmit}
-                  >
-                    Sign up
-                    {user.isLoading && (
-                      <CircularProgress size={20} color="inherit" />
-                    )}
-                  </ButtonField>
-                </div>
-              </form>
-              <div className="flex flex-col sm:flex-row justify-end items-center mx-5 md:mx-2 lg:mx-10 mt-2">
-                <Link to={ROUTES.LOGIN}>
-                  <p className="text-xs text-gray-600">
-                    Already have an account?
-                  </p>
-                </Link>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

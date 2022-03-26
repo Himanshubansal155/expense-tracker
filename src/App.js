@@ -5,11 +5,13 @@ import { ME_FETCH } from "./constants/action.constants";
 import { AUTH_TOKEN } from "./constants/secrets";
 import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
-
+import Firebase from "./services/firebase.service";
+import { initializeApp } from "firebase/app";
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem(AUTH_TOKEN);
   useEffect(() => {
+    initializeApp(Firebase);
     if (!token) {
       return;
     }
@@ -22,14 +24,10 @@ function App() {
     return <div className="text-blue-600">Loading...</div>;
   }
   return (
-    
     <div>
       <NotificationContainer />
       <NavigationPage />
     </div>
-    
-    
-    
   );
 }
 
