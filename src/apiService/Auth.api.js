@@ -28,6 +28,19 @@ export const login = async (data) => {
   }
 };
 
+export const loginMobile = async (data) => {
+  const url = BASE_URL + "login-mobile";
+  try {
+    const response = await axios.post(url, data);
+    if (!!response?.data?.user) {
+      localStorage.setItem(AUTH_TOKEN, response.data.token);
+      return response.data.user;
+    }
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
+};
+
 export const logout = () => {
   localStorage.removeItem(AUTH_TOKEN);
 };
