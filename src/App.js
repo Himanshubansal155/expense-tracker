@@ -10,8 +10,8 @@ import { initializeApp } from "firebase/app";
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem(AUTH_TOKEN);
+  initializeApp(Firebase);
   useEffect(() => {
-    initializeApp(Firebase);
     if (!token) {
       return;
     }

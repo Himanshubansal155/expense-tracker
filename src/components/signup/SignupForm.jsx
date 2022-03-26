@@ -1,7 +1,5 @@
-import { CircularProgress } from "@mui/material";
 import { useFormik } from "formik";
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../constants/Colors";
 import { ROUTES } from "../../constants/Routes";
@@ -10,7 +8,6 @@ import Input from "../shared components/Input/Input";
 import * as Yup from "yup";
 
 const SignupForm = ({ onSubmit }) => {
-  const user = useSelector((state) => state?.user);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -103,7 +100,6 @@ const SignupForm = ({ onSubmit }) => {
             onClick={formik.handleSubmit}
           >
             Sign up
-            {user.isLoading && <CircularProgress size={20} color="inherit" />}
           </ButtonField>
         </div>
       </form>

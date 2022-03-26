@@ -43,7 +43,6 @@ const SignUp = () => {
     }
   };
   const signInCall = (values, verifier) => {
-    console.log(auth, verifier || recaptchaVerifier);
     signInWithPhoneNumber(
       auth,
       `+91${values.phone}`,
@@ -53,8 +52,9 @@ const SignUp = () => {
         setConfirmationResult(confirmationResult);
       })
       .catch((error) => {
-        setForm(null);
         toastService.showErrorToast(error.message);
+        setForm(null);
+        window.location.reload();
         console.log(error);
       });
   };
@@ -71,6 +71,9 @@ const SignUp = () => {
         });
     }
   };
+  const renderButton = (buttonProps) => {
+    return <button {...buttonProps}>Resend One-Time Password</button>;
+  };
   return (
     <>
       <div className="h-screen bg-white flex flex-col md:flex-row">
@@ -84,8 +87,12 @@ const SignUp = () => {
             {!form ? (
               <SignupForm onSubmit={signInOtp} />
             ) : (
-              <div className="flex flex-col items-center h-full justify-center space-y-5">
-                <h1>Verify Phone Number</h1>
+              <div className="flex flex-col items-center h-full justify-center space-y-5 p-3">
+                <h1>Please enter One-Time Password to verify your account</h1>
+                <h1 className="text-sm text-gray-500">
+                  A One-Time Password sent to {`${form.phone.substring(0, 4)}`}
+                  ******
+                </h1>
                 <div className="flex flex-col w-full items-center">
                   <OTPInput
                     value={otp}
@@ -93,12 +100,8 @@ const SignUp = () => {
                     autoFocus
                     OTPLength={6}
                     otpType="number"
-                    className="border border-gray-100"
+                    inputClassName="border border-gray-300"
                     placeholder={0}
-                  />
-                  <ResendOTP
-                    onResendClick={() => signInCall(form)}
-                    onTimerComplete={() => setConfirmationResult(null)}
                   />
 
                   <div className="form-group mt-10 flex justify-between">
@@ -122,6 +125,19 @@ const SignUp = () => {
                       )}
                     </ButtonField>
                   </div>
+                  <ResendOTP
+                    onResendClick={() => signInCall(form)}
+                    onTimerComplete={() => setConfirmationResult(null)}
+                    className="flex justify-between flex-col items-center mt-10"
+                    renderButton={renderButton}
+                  />
+
+                  <p
+                    className="text-sm text-gray-500 mt-5 cursor-pointer"
+                    onClick={() => window.location.reload()}
+                  >
+                    Entered a wrong number?
+                  </p>
                 </div>
               </div>
             )}
