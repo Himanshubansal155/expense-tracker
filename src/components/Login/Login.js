@@ -22,7 +22,7 @@ import OTPInput, { ResendOTP } from "otp-input-react";
 
 const Login = () => {
   const [loginMobile, setLoginMobile] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState(null);
+  const [mobileNumber, setMobileNumber] = useState("");
   const [recaptchaVerifier, setRecaptchaVerifier] = useState(null);
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [otpPageOpen, setOtpPageOpen] = useState(false);
