@@ -3,3 +3,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(0deg, #5b21b6, #3f1582);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: 0px 0px 0px 100000vh #f1f1f1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f1582;
+}

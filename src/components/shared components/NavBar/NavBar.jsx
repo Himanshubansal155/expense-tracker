@@ -6,7 +6,7 @@ import "./Navbar.scss";
 const NavBar = () => {
   return (
     <div>
-      <div className="flex justify-between px-5 py-3 items-center shadow-md">
+      <div className="flex justify-between px-5 py-3 items-center shadow-lg">
         <div className="p-2 flex items-end">
           <img src="/logo.png" alt="Logo" height={50} width={50} />
           <span className="title">budget-shaper</span>
