@@ -4,5 +4,5 @@
 }
 
 .button {
-  @apply py-1 px-5 hover:bg-yellow-400 hover:shadow-lg bg-opacity-80 hover:text-white rounded-xl font-Roboto font-medium text-gray-500;
+  @apply py-1 px-5 hover:bg-yellow-400 hover:shadow-lg bg-opacity-80 hover:text-white rounded-xl font-Roboto font-medium text-gray-500 cursor-pointer;
 }

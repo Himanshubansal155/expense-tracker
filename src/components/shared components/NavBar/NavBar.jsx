@@ -13,7 +13,7 @@ const NavBar = () => {
           <li className="button">Home</li>
           <li className="button">How it works</li>
           <li className="button">Register</li>
-          <li className="py-1 px-5 hover:bg-yellow-400 shadow-lg bg-yellow-500 bg-opacity-80 text-white rounded-xl">
+          <li className="button hover:bg-yellow-400 shadow-lg bg-yellow-500 bg-opacity-80 text-white hover:text-gray-500">
             Login
           </li>
         </ul>
