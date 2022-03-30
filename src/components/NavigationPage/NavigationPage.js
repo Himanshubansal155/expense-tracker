@@ -31,7 +31,10 @@ const NavigationPage = () => {
         </>
       ) : (
         <Routes>
-          <Route path={`/`} element={<Dashboard />} />
+          <Route
+            path={`/`}
+            element={<Navigate to={ROUTES.DASHBOARD} replace />}
+          />
           <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
           <Route path="*" element={<div>Not Found 404</div>} />
         </Routes>

@@ -4,9 +4,15 @@
 }
 
 .button {
-  @apply py-1 px-5 hover:bg-yellow-400 hover:shadow-lg bg-opacity-80 hover:text-white rounded-xl font-Roboto font-medium text-gray-500 cursor-pointer;
+  @apply py-1 px-5 hover:bg-darkPrimary hover:shadow-lg hover:text-white rounded-xl font-Roboto font-medium text-gray-500 cursor-pointer;
 }
 
 .button-active {
-  @apply hover:bg-yellow-400 shadow-lg bg-yellow-500 text-white hover:text-gray-500;
+  @apply hover:bg-darkPrimary shadow-lg bg-primary text-white;
+}
+
+.image {
+  background-image: url("https://wallpapercave.com/wp/wp2561061.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }

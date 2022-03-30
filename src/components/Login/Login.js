@@ -103,8 +103,8 @@ const Login = () => {
     return <button {...buttonProps}>Resend One-Time Password</button>;
   };
   return (
-    <div className="p-1">
-      <div className="flex flex-col md:flex-row bg-gray-100">
+    <div className="pt-1">
+      <div className="flex flex-col md:flex-row  image">
         <div className="md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
           <div className="h-3/4 w-3/4 bg-primary md:mt-20 shadow-2xl"> </div>
         </div>
