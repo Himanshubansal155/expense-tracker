@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { LOGGED_OUT } from "../../constants/action.constants";
 import { ROUTES } from "../../constants/Routes";
 import Dashboard from "../Dashboard/Dashboard";
@@ -19,7 +19,10 @@ const NavigationPage = () => {
         <>
           <NavBar />
           <Routes>
-            <Route path={`/`} element={<HomePage />} />
+            <Route
+              path={`/`}
+              element={<Navigate to={ROUTES.WELCOME} replace />}
+            />
             <Route path={ROUTES.WELCOME} element={<HomePage />} />
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.SIGNUP} element={<SignUp />} />
