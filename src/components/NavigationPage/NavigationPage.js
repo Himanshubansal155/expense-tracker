@@ -6,7 +6,9 @@ import { ROUTES } from "../../constants/Routes";
 import Dashboard from "../Dashboard/Dashboard";
 import HomePage from "../Home/HomePage";
 import Login from "../Login/Login";
+import SignUp from "../signup/signup";
 import Speechly from "../Speechly/Speechly";
+
 
 const NavigationPage = () => {
   const loginStatus = useSelector((state) => state.user?.loginStatus);
@@ -18,6 +20,7 @@ const NavigationPage = () => {
           <Route path={`/`} element={<HomePage />} />
           <Route path={ROUTES.WELCOME} element={<HomePage />} />
           <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route path={ROUTES.SIGNUP} element={<SignUp />} />
           <Route path="*" element={<div>Not Found 404</div>} />
         </Routes>
       ) : (

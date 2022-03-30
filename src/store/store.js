@@ -9,7 +9,9 @@ export default configureStore({
     user: AuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);
