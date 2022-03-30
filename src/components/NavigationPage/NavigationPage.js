@@ -8,7 +8,7 @@ import HomePage from "../Home/HomePage";
 import Login from "../Login/Login";
 import SignUp from "../signup/signup";
 import Speechly from "../Speechly/Speechly";
-
+import NavBar from "./../shared components/NavBar/NavBar";
 
 const NavigationPage = () => {
   const loginStatus = useSelector((state) => state.user?.loginStatus);
@@ -16,13 +16,16 @@ const NavigationPage = () => {
     <>
       <Speechly />
       {loginStatus === LOGGED_OUT ? (
-        <Routes>
-          <Route path={`/`} element={<HomePage />} />
-          <Route path={ROUTES.WELCOME} element={<HomePage />} />
-          <Route path={ROUTES.LOGIN} element={<Login />} />
-          <Route path={ROUTES.SIGNUP} element={<SignUp />} />
-          <Route path="*" element={<div>Not Found 404</div>} />
-        </Routes>
+        <>
+          <NavBar />
+          <Routes>
+            <Route path={`/`} element={<HomePage />} />
+            <Route path={ROUTES.WELCOME} element={<HomePage />} />
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+            <Route path="*" element={<div>Not Found 404</div>} />
+          </Routes>
+        </>
       ) : (
         <Routes>
           <Route path={`/`} element={<Dashboard />} />

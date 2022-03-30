@@ -1,22 +1,50 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import { ROUTES } from "../../../constants/Routes";
 import "./Navbar.scss";
 
 const NavBar = () => {
   return (
-    <div className="flex justify-between p-5 items-center">
-      <div className="p-2 flex items-end">
-        <img src="/logo.png" alt="Logo" height={50} width={50} />
-        <span className="title">budget-shaper</span>
-      </div>
-      <div>
-        <ul className="flex space-x-3">
-          <li className="button">Home</li>
-          <li className="button">How it works</li>
-          <li className="button">Register</li>
-          <li className="button hover:bg-yellow-400 shadow-lg bg-yellow-500 bg-opacity-80 text-white hover:text-gray-500">
+    <div>
+      <div className="flex justify-between px-5 py-3 items-center shadow-md">
+        <div className="p-2 flex items-end">
+          <img src="/logo.png" alt="Logo" height={50} width={50} />
+          <span className="title">budget-shaper</span>
+        </div>
+        <div className="flex space-x-3">
+          <NavLink
+            to={ROUTES.WELCOME}
+            className={({ isActive }) =>
+              isActive ? "button button-active" : "button"
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to={ROUTES.DASHBOARD}
+            className={({ isActive }) =>
+              isActive ? "button button-active" : "button"
+            }
+          >
+            How it works
+          </NavLink>
+          <NavLink
+            to={ROUTES.SIGNUP}
+            className={({ isActive }) =>
+              isActive ? "button button-active" : "button"
+            }
+          >
+            Register
+          </NavLink>
+          <NavLink
+            to={ROUTES.LOGIN}
+            className={({ isActive }) =>
+              isActive ? "button button-active" : "button"
+            }
+          >
             Login
-          </li>
-        </ul>
+          </NavLink>
+        </div>
       </div>
     </div>
   );
