@@ -104,12 +104,12 @@ const Login = () => {
   };
   return (
     <div className="pt-1">
-      <div className="flex flex-col md:flex-row  image">
-        <div className="md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
+      <div className="h-screen flex flex-col md:flex-row image">
+        <div className="h-4/5 md:h-full md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
           <div className="h-3/4 w-3/4 bg-primary md:mt-20 shadow-2xl"> </div>
         </div>
         <div className="h-screen md:w-3/5 ">
-          <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white p-10 md:mt-20 shadow-2xl">
+          <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white p-4 sm:p-10 md:mt-20 shadow-2xl">
             <div className="">
               {!otpPageOpen ? (
                 !loginMobile ? (
@@ -118,7 +118,7 @@ const Login = () => {
                       <h1 className="text-black text-2xl ">Log In</h1>
                     </div>
 
-                    <div className="form-group w-3/4 lg:w-2/3  mt-10">
+                    <div className="form-group w-5/6 sm:w-3/4 lg:w-2/3  mt-10">
                       <Input
                         type="text"
                         label="Email"
@@ -130,7 +130,7 @@ const Login = () => {
                         errorfield={formik.touched.email && formik.errors.email}
                       />
                     </div>
-                    <div className="form-group w-3/4 lg:w-2/3  mt-10">
+                    <div className="form-group w-5/6 sm:w-3/4 lg:w-2/3  mt-10">
                       <Input
                         type="password"
                         label="Password"
@@ -278,12 +278,16 @@ const Login = () => {
                   </div>
                 </div>
               )}
-              <div className="flex flex-col sm:flex-row justify-between items-center mx-5 md:mx-2 lg:mx-10 mt-2">
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center mx-5 md:mx-2 lg:mx-10">
                 <Link to={ROUTES.SIGNUP}>
-                  <p className="text-xs text-gray-600">Create an account?</p>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Create an account?
+                  </p>
                 </Link>
                 <Link to={ROUTES.REGISTER}>
-                  <p className="text-xs text-gray-600">Forget Password</p>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Forget Password
+                  </p>
                 </Link>
               </div>
             </div>
