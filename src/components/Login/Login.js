@@ -103,187 +103,193 @@ const Login = () => {
     return <button {...buttonProps}>Resend One-Time Password</button>;
   };
   return (
-    <div className="h-screen bg-white flex flex-col md:flex-row">
-      <div className="h-screen bg-purple-700 md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
-        <div className="h-3/4 w-3/4 bg-purple-700 md:mt-20 shadow-2xl"> </div>
-      </div>
-      <div className="h-screen bg-white md:w-3/5 ">
-        <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white p-10 md:mt-20 shadow-2xl">
-          <div className="">
-            {!otpPageOpen ? (
-              !loginMobile ? (
-                <form className="flex flex-col w-full items-center">
-                  <div className="md:mt-24">
-                    <h1 className="text-black text-2xl ">Log In</h1>
-                  </div>
+    <div className="pt-1">
+      <div className="h-screen flex flex-col md:flex-row image">
+        <div className="h-4/5 md:h-full md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
+          <div className="h-3/4 w-3/4 bg-primary md:mt-20 shadow-2xl"> </div>
+        </div>
+        <div className="h-screen md:w-3/5 ">
+          <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white p-4 sm:p-10 md:mt-20 shadow-2xl">
+            <div className="">
+              {!otpPageOpen ? (
+                !loginMobile ? (
+                  <form className="flex flex-col w-full items-center">
+                    <div className="md:mt-24">
+                      <h1 className="text-black text-2xl ">Log In</h1>
+                    </div>
 
-                  <div className="form-group w-3/4 lg:w-2/3  mt-10">
-                    <Input
-                      type="text"
-                      label="Email"
-                      name="email"
-                      required
-                      onChange={formik.handleChange}
-                      value={formik.values.email}
-                      onBlur={formik.handleBlur}
-                      errorfield={formik.touched.email && formik.errors.email}
-                    />
-                  </div>
-                  <div className="form-group w-3/4 lg:w-2/3  mt-10">
-                    <Input
-                      type="password"
-                      label="Password"
-                      name="password"
-                      required
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                      onBlur={formik.handleBlur}
-                      errorfield={
-                        formik.touched.password && formik.errors.password
-                      }
-                    />
-                  </div>
-                  <div className="form-group mt-10 flex justify-between">
-                    <ButtonField
-                      buttonstyle={{
-                        backgroundColor: COLORS.primary,
-                        borderRadius: 20,
-                        color: "white",
-                        fontWeight: "bold",
-                        paddingLeft: 40,
-                        paddingRight: 40,
-                        paddingTop: 8,
-                        paddingBottom: 8,
-                      }}
-                      hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
-                      onClick={formik.handleSubmit}
-                    >
-                      Login
-                      {user.isLoading && (
-                        <CircularProgress size={20} color="inherit" />
-                      )}
-                    </ButtonField>
-                  </div>
-                  <p
-                    className="mt-5 text-sm cursor-pointer text-gray-500"
-                    onClick={() => setLoginMobile(true)}
-                  >
-                    Login using Phone
-                  </p>
-                </form>
-              ) : (
-                <div className="flex flex-col w-full items-center justify-center h-full">
-                  <div className="md:mt-24">
-                    <h1 className="text-black text-2xl ">Log In</h1>
-                  </div>
-
-                  <div className="form-group w-3/4 lg:w-2/3  mt-10">
-                    <Input
-                      type="text"
-                      label="Phone Number"
-                      required
-                      onChange={(e) => setMobileNumber(e.target.value)}
-                      value={mobileNumber}
-                    />
-                  </div>
-                  <div className="form-group mt-10 flex justify-between">
-                    <ButtonField
-                      buttonstyle={{
-                        backgroundColor: COLORS.primary,
-                        borderRadius: 20,
-                        color: "white",
-                        fontWeight: "bold",
-                        paddingLeft: 40,
-                        paddingRight: 40,
-                        paddingTop: 8,
-                        paddingBottom: 8,
-                      }}
-                      hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
-                      onClick={() => {
-                        if (mobileNumber.length === 10) {
-                          signInOtp();
-                        } else {
-                          toastService.showErrorToast("Enter valid Number");
+                    <div className="form-group w-5/6 sm:w-3/4 lg:w-2/3  mt-10">
+                      <Input
+                        type="text"
+                        label="Email"
+                        name="email"
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
+                        onBlur={formik.handleBlur}
+                        errorfield={formik.touched.email && formik.errors.email}
+                      />
+                    </div>
+                    <div className="form-group w-5/6 sm:w-3/4 lg:w-2/3  mt-10">
+                      <Input
+                        type="password"
+                        label="Password"
+                        name="password"
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        onBlur={formik.handleBlur}
+                        errorfield={
+                          formik.touched.password && formik.errors.password
                         }
-                      }}
+                      />
+                    </div>
+                    <div className="form-group mt-10 flex justify-between">
+                      <ButtonField
+                        buttonstyle={{
+                          backgroundColor: COLORS.primary,
+                          borderRadius: 20,
+                          color: "white",
+                          fontWeight: "bold",
+                          paddingLeft: 40,
+                          paddingRight: 40,
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                        }}
+                        hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
+                        onClick={formik.handleSubmit}
+                      >
+                        Login
+                        {user.isLoading && (
+                          <CircularProgress size={20} color="inherit" />
+                        )}
+                      </ButtonField>
+                    </div>
+                    <p
+                      className="mt-5 text-sm cursor-pointer text-gray-500"
+                      onClick={() => setLoginMobile(true)}
                     >
-                      Send OTP
-                      {user.isLoading && (
-                        <CircularProgress size={20} color="inherit" />
-                      )}
-                    </ButtonField>
-                  </div>
-                  <p
-                    className="mt-5 text-sm cursor-pointer text-gray-500"
-                    onClick={() => setLoginMobile(false)}
-                  >
-                    Login using Email
-                  </p>
-                </div>
-              )
-            ) : (
-              <div className="flex flex-col items-center h-full justify-center space-y-5 p-3">
-                <h1>Please enter One-Time Password to verify your account</h1>
-                <h1 className="text-sm text-gray-500">
-                  A One-Time Password sent to{" "}
-                  {`${mobileNumber.substring(0, 4)}`}
-                  ******
-                </h1>
-                <div className="flex flex-col w-full items-center">
-                  <OTPInput
-                    value={otp}
-                    onChange={setotp}
-                    autoFocus
-                    OTPLength={6}
-                    otpType="number"
-                    inputClassName="border border-gray-300"
-                    placeholder={0}
-                  />
+                      Login using Phone
+                    </p>
+                  </form>
+                ) : (
+                  <div className="flex flex-col w-full items-center justify-center h-full">
+                    <div className="md:mt-24">
+                      <h1 className="text-black text-2xl ">Log In</h1>
+                    </div>
 
-                  <div className="form-group mt-10 flex justify-between">
-                    <ButtonField
-                      buttonstyle={{
-                        backgroundColor: COLORS.primary,
-                        borderRadius: 20,
-                        color: "white",
-                        fontWeight: "bold",
-                        paddingLeft: 40,
-                        paddingRight: 40,
-                        paddingTop: 8,
-                        paddingBottom: 8,
-                      }}
-                      hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
-                      onClick={verifyAndSignUp}
+                    <div className="form-group w-3/4 lg:w-2/3  mt-10">
+                      <Input
+                        type="text"
+                        label="Phone Number"
+                        required
+                        onChange={(e) => setMobileNumber(e.target.value)}
+                        value={mobileNumber}
+                      />
+                    </div>
+                    <div className="form-group mt-10 flex justify-between">
+                      <ButtonField
+                        buttonstyle={{
+                          backgroundColor: COLORS.primary,
+                          borderRadius: 20,
+                          color: "white",
+                          fontWeight: "bold",
+                          paddingLeft: 40,
+                          paddingRight: 40,
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                        }}
+                        hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
+                        onClick={() => {
+                          if (mobileNumber.length === 10) {
+                            signInOtp();
+                          } else {
+                            toastService.showErrorToast("Enter valid Number");
+                          }
+                        }}
+                      >
+                        Send OTP
+                        {user.isLoading && (
+                          <CircularProgress size={20} color="inherit" />
+                        )}
+                      </ButtonField>
+                    </div>
+                    <p
+                      className="mt-5 text-sm cursor-pointer text-gray-500"
+                      onClick={() => setLoginMobile(false)}
                     >
-                      Verify
-                      {user.isLoading && (
-                        <CircularProgress size={20} color="inherit" />
-                      )}
-                    </ButtonField>
+                      Login using Email
+                    </p>
                   </div>
-                  <ResendOTP
-                    onResendClick={() => signInCall()}
-                    onTimerComplete={() => setConfirmationResult(null)}
-                    className="flex justify-between flex-col items-center mt-10"
-                    renderButton={renderButton}
-                  />
+                )
+              ) : (
+                <div className="flex flex-col items-center h-full justify-center space-y-5 p-3">
+                  <h1>Please enter One-Time Password to verify your account</h1>
+                  <h1 className="text-sm text-gray-500">
+                    A One-Time Password sent to{" "}
+                    {`${mobileNumber.substring(0, 4)}`}
+                    ******
+                  </h1>
+                  <div className="flex flex-col w-full items-center">
+                    <OTPInput
+                      value={otp}
+                      onChange={setotp}
+                      autoFocus
+                      OTPLength={6}
+                      otpType="number"
+                      inputClassName="border border-gray-300"
+                      placeholder={0}
+                    />
 
-                  <p
-                    className="text-sm text-gray-500 mt-5 cursor-pointer"
-                    onClick={() => window.location.reload()}
-                  >
-                    Entered a wrong number?
-                  </p>
+                    <div className="form-group mt-10 flex justify-between">
+                      <ButtonField
+                        buttonstyle={{
+                          backgroundColor: COLORS.primary,
+                          borderRadius: 20,
+                          color: "white",
+                          fontWeight: "bold",
+                          paddingLeft: 40,
+                          paddingRight: 40,
+                          paddingTop: 8,
+                          paddingBottom: 8,
+                        }}
+                        hoverstyle={{ backgroundColor: COLORS.darkPrimary }}
+                        onClick={verifyAndSignUp}
+                      >
+                        Verify
+                        {user.isLoading && (
+                          <CircularProgress size={20} color="inherit" />
+                        )}
+                      </ButtonField>
+                    </div>
+                    <ResendOTP
+                      onResendClick={() => signInCall()}
+                      onTimerComplete={() => setConfirmationResult(null)}
+                      className="flex justify-between flex-col items-center mt-10"
+                      renderButton={renderButton}
+                    />
+
+                    <p
+                      className="text-sm text-gray-500 mt-5 cursor-pointer"
+                      onClick={() => window.location.reload()}
+                    >
+                      Entered a wrong number?
+                    </p>
+                  </div>
                 </div>
+              )}
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center mx-5 md:mx-2 lg:mx-10">
+                <Link to={ROUTES.SIGNUP}>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Create an account?
+                  </p>
+                </Link>
+                <Link to={ROUTES.REGISTER}>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Forget Password
+                  </p>
+                </Link>
               </div>
-            )}
-            <div className="flex flex-col sm:flex-row justify-between items-center mx-5 md:mx-2 lg:mx-10 mt-2">
-              <Link to={ROUTES.SIGNUP}>
-                <p className="text-xs text-gray-600">Create an account?</p>
-              </Link>
-              <Link to={ROUTES.REGISTER}>
-                <p className="text-xs text-gray-600">Forget Password</p>
-              </Link>
             </div>
           </div>
         </div>

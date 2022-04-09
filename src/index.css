@@ -1,3 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hurricane&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(0deg, #5b21b6, #3f1582);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: 0px 0px 0px 100000vh #f1f1f1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f1582;
+}

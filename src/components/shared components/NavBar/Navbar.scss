@@ -1,0 +1,18 @@
+.title {
+  font-family: "Hurricane", cursive;
+  font-size: 24px;
+}
+
+.button {
+  @apply py-1 px-5 hover:bg-darkPrimary hover:shadow-lg hover:text-white rounded-xl font-Roboto font-medium text-gray-500 cursor-pointer;
+}
+
+.button-active {
+  @apply hover:bg-darkPrimary shadow-lg bg-primary text-white;
+}
+
+.image {
+  background-image: url("https://wallpapercave.com/wp/wp2561061.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
