@@ -8,3 +8,4 @@ export const LOGGED_OUT = 0;
 export const LOGGED_IN = 1;
 
 export const SHOW_ALL_EXPENSES = "showAll";
+export const GET_EXPENSE = "getExpense";

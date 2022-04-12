@@ -14,17 +14,22 @@ export const expenseSlice = createSlice({
     loading: (state) => {
       state.isLoading = true;
     },
-    indexExpenses: (state, actions) => {
-      state.expenses = actions.payload;
+    indexExpenses: (state, action) => {
+      state.expenses = action.payload;
       state.isLoading = false;
     },
-    error: (state, actions) => {
-      state.error = actions.payload;
+    getExpenseById: (state, action) => {
+      state.expense = action.payload;
+      state.isLoading = false;
+    },
+    error: (state, action) => {
+      state.error = action.payload;
       state.isLoading = false;
     },
   },
 });
 
-export const { loading, indexExpenses, error } = expenseSlice.actions;
+export const { loading, indexExpenses, error, getExpenseById } =
+  expenseSlice.actions;
 
 export default expenseSlice.reducer;
