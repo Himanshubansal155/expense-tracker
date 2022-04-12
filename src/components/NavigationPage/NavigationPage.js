@@ -3,12 +3,17 @@ import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { LOGGED_OUT } from "../../constants/action.constants";
 import { ROUTES } from "../../constants/Routes";
+import Analytics from "../Analytics/Analytics";
+import Budget from "../Budget/Budget";
 import Dashboard from "../Dashboard/Dashboard";
 import MiniDrawer from "../Dashboard/Drawer";
+import Expenses from "../Expenses/Expenses";
 import HomePage from "../Home/HomePage";
 import Login from "../Login/Login";
+import Settings from "../Settings/Settings";
 import SignUp from "../signup/signup";
 import Speechly from "../Speechly/Speechly";
+import Trash from "../Trash/Trash";
 import NavBar from "./../shared components/NavBar/NavBar";
 
 const NavigationPage = () => {
@@ -38,6 +43,11 @@ const NavigationPage = () => {
               element={<Navigate to={ROUTES.DASHBOARD} replace />}
             />
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route path={ROUTES.EXPENSES} element={<Expenses />} />
+            <Route path={ROUTES.BUDGET} element={<Budget />} />
+            <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
+            <Route path={ROUTES.SETTINGS} element={<Settings />} />
+            <Route path={ROUTES.TRASH} element={<Trash />} />
             <Route path="*" element={<div>Not Found 404</div>} />
           </Routes>
         </MiniDrawer>

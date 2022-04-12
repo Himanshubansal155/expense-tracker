@@ -21,6 +21,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../constants/Routes";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
+import { COLORS } from "../../constants/Colors";
 
 const drawerWidth = 180;
 
@@ -133,7 +134,7 @@ export default function MiniDrawer({ children }) {
   return (
     <div style={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={false} className={"bg-gray-400"}>
+      <AppBar position="fixed" open={false} className={"bg-primary"}>
         <Toolbar className="pl-3">
           <div className="p-2 pl-0 mr-6 flex items-end">
             <img src="/logo.png" alt="Logo" height={48} width={50} />
@@ -166,13 +167,11 @@ export default function MiniDrawer({ children }) {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   backgroundColor:
-                    pathname === route.to.split("/")[1]
-                      ? "rgb(156, 163, 175)"
-                      : "",
+                    pathname === route.to.split("/")[1] ? COLORS.primary : "",
                   color:
                     pathname === route.to.split("/")[1] ? "white" : "black",
                 }}
-                className="hover:opacity-70 hover:bg-gray-400 hover:text-white"
+                className="hover:opacity-70 hover:bg-darkPrimary hover:text-white"
               >
                 <ListItemIcon
                   sx={{
@@ -202,13 +201,11 @@ export default function MiniDrawer({ children }) {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   backgroundColor:
-                    pathname === route.to.split("/")[1]
-                      ? "rgb(156, 163, 175)"
-                      : "",
+                    pathname === route.to.split("/")[1] ? COLORS.primary : "",
                   color:
                     pathname === route.to.split("/")[1] ? "white" : "black",
                 }}
-                className="hover:opacity-70 hover:bg-gray-400 hover:text-white"
+                className="hover:opacity-70 hover:bg-darkPrimary hover:text-white"
               >
                 <ListItemIcon
                   sx={{
