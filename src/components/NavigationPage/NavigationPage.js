@@ -4,6 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { LOGGED_OUT } from "../../constants/action.constants";
 import { ROUTES } from "../../constants/Routes";
 import Dashboard from "../Dashboard/Dashboard";
+import MiniDrawer from "../Dashboard/Drawer";
 import HomePage from "../Home/HomePage";
 import Login from "../Login/Login";
 import SignUp from "../signup/signup";
@@ -30,14 +31,16 @@ const NavigationPage = () => {
           </Routes>
         </>
       ) : (
-        <Routes>
-          <Route
-            path={`/`}
-            element={<Navigate to={ROUTES.DASHBOARD} replace />}
-          />
-          <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-          <Route path="*" element={<div>Not Found 404</div>} />
-        </Routes>
+        <MiniDrawer>
+          <Routes>
+            <Route
+              path={`/`}
+              element={<Navigate to={ROUTES.DASHBOARD} replace />}
+            />
+            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route path="*" element={<div>Not Found 404</div>} />
+          </Routes>
+        </MiniDrawer>
       )}
     </>
   );
