@@ -1,18 +1,31 @@
 import { call, put, takeEvery, all } from "redux-saga/effects";
-import { showAllExpenses } from "../apiService/expense.api";
-import { GET_EXPENSE, SHOW_ALL_EXPENSES } from "../constants/action.constants";
+import {
+  addExpenseApi,
+  deleteExpenseApi,
+  editExpenseApi,
+  showAllExpensesApi,
+} from "../apiService/expense.api";
+import {
+  ADD_EXPENSE,
+  DELETE_EXPENSE,
+  GET_EXPENSE,
+  SHOW_ALL_EXPENSES,
+  UPDATE_EXPENSE,
+} from "../constants/action.constants";
 import {
   indexExpenses,
   loading,
   error,
   getExpenseById,
+  deleteExpenseFromExpenses,
+  addExpense,
 } from "../Reducers/ExpenseReducer";
 import toastService from "../services/toastService";
 
 export function* indexAllExpenses(action) {
   try {
     yield put(loading());
-    const response = yield call(showAllExpenses, action.payload.filters);
+    const response = yield call(showAllExpensesApi, action.payload.filters);
     yield put(indexExpenses(response));
   } catch (err) {
     toastService.showErrorToast(error.message);
@@ -22,8 +35,45 @@ export function* indexAllExpenses(action) {
 export function* getExpense(action) {
   try {
     yield put(loading());
-    const response = yield call(showAllExpenses, action.payload.id);
+    const response = yield call(showAllExpensesApi, action.payload.id);
     yield put(getExpenseById(response));
+  } catch (err) {
+    toastService.showErrorToast(error.message);
+    yield put(error(err));
+  }
+}
+
+export function* updateExpense(action) {
+  try {
+    yield put(loading());
+    const response = yield call(
+      editExpenseApi,
+      action.payload.id,
+      action.payload.data
+    );
+    yield put(getExpenseById(response));
+  } catch (err) {
+    toastService.showErrorToast(error.message);
+    yield put(error(err));
+  }
+}
+
+export function* deleteUserExpense(action) {
+  try {
+    yield put(loading());
+    yield call(deleteExpenseApi, action.payload.id);
+    yield put(deleteExpenseFromExpenses(action.payload.index));
+  } catch (err) {
+    toastService.showErrorToast(error.message);
+    yield put(error(err));
+  }
+}
+
+export function* addUserExpense(action) {
+  try {
+    yield put(loading());
+    const response = yield call(addExpenseApi, action.payload.id);
+    yield put(addExpense(response));
   } catch (err) {
     toastService.showErrorToast(error.message);
     yield put(error(err));
@@ -33,5 +83,8 @@ export function* getExpense(action) {
 export function* watchExpenseChanged() {
   yield all([takeEvery(SHOW_ALL_EXPENSES, indexAllExpenses)]);
   yield all([takeEvery(GET_EXPENSE, getExpense)]);
+  yield all([takeEvery(UPDATE_EXPENSE, updateExpense)]);
+  yield all([takeEvery(DELETE_EXPENSE, deleteUserExpense)]);
+  yield all([takeEvery(ADD_EXPENSE, addUserExpense)]);
   yield;
 }

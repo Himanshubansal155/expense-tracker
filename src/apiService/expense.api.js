@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/secrets";
 import { get } from "./base.api";
 
-export const showExpense = async (id) => {
+export const showExpenseApi = async (id) => {
   try {
     const url = BASE_URL + `expense/${id}`;
     const response = await get(url);
@@ -12,7 +12,7 @@ export const showExpense = async (id) => {
   }
 };
 
-export const editExpense = async (id, data) => {
+export const editExpenseApi = async (id, data) => {
   try {
     const url = BASE_URL + `expense/${id}`;
     const response = await axios.put(url, { data });
@@ -22,7 +22,7 @@ export const editExpense = async (id, data) => {
   }
 };
 
-export const deleteExpense = async (id) => {
+export const deleteExpenseApi = async (id) => {
   try {
     const url = BASE_URL + `expense/${id}`;
     const response = await axios.delete(url);
@@ -32,7 +32,7 @@ export const deleteExpense = async (id) => {
   }
 };
 
-export const addExpense = async (data) => {
+export const addExpenseApi = async (data) => {
   try {
     const url = BASE_URL + "expense";
     const response = await axios.post(url, { data });
@@ -42,7 +42,7 @@ export const addExpense = async (data) => {
   }
 };
 
-export const showAllExpenses = async (filters) => {
+export const showAllExpensesApi = async (filters) => {
   try {
     const url = BASE_URL + "all-expenses";
     const response = await get(url, { params: filters });
