@@ -103,29 +103,29 @@ export default function MiniDrawer({ children }) {
     {
       name: "Expenses",
       icon: ReceiptLongIcon,
-      to: ROUTES.SIGNUP,
+      to: ROUTES.EXPENSES,
     },
     {
       name: "Budget",
       icon: ShoppingBagIcon,
-      to: ROUTES.LOGIN,
+      to: ROUTES.BUDGET,
     },
     {
       name: "Analytics",
       icon: AssessmentIcon,
-      to: ROUTES.WELCOME,
+      to: ROUTES.ANALYTICS,
     },
   ];
   const lowerRoutes = [
     {
       name: "Settings",
       icon: SettingsApplicationsIcon,
-      to: ROUTES.LOGIN,
+      to: ROUTES.SETTINGS,
     },
     {
       name: "Trash",
       icon: RestoreFromTrashIcon,
-      to: ROUTES.DASHBOARD,
+      to: ROUTES.TRASH,
     },
   ];
 
@@ -136,7 +136,7 @@ export default function MiniDrawer({ children }) {
       <AppBar position="fixed" open={false} className={"bg-gray-400"}>
         <Toolbar className="pl-3">
           <div className="p-2 pl-0 mr-6 flex items-end">
-            <img src="/logo.png" alt="Logo" height={50} width={50} />
+            <img src="/logo.png" alt="Logo" height={48} width={50} />
           </div>
           <IconButton
             color="inherit"
@@ -157,7 +157,7 @@ export default function MiniDrawer({ children }) {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader />
         <Divider />
-        <List>
+        <List className="pt-0">
           {upperRoutes.map((route, index) => (
             <Link key={index} to={route.to}>
               <ListItemButton

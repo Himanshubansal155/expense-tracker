@@ -4,4 +4,9 @@ export const ROUTES = {
   DASHBOARD: "/Dashboard",
   WELCOME: "/Welcome",
   SIGNUP: "/Signup",
+  EXPENSES: "/Expenses",
+  SETTINGS: "/Settings",
+  BUDGET: "/Budget",
+  ANALYTICS: "/Analytics",
+  TRASH: "/Trash"
 };

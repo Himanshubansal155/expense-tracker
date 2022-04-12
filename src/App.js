@@ -7,6 +7,7 @@ import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import Firebase from "./services/firebase.service";
 import { initializeApp } from "firebase/app";
+import { CircularProgress } from "@mui/material";
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem(AUTH_TOKEN);
@@ -21,7 +22,12 @@ function App() {
   }, []);
   const user = useSelector((state) => state?.user?.data);
   if (token && !user) {
-    return <div className="text-blue-600">Loading...</div>;
+    return (
+      <div className="flex flex-col space-y-2 text-black justify-center mt-3 items-center">
+        <CircularProgress color="inherit" />
+        Loading...
+      </div>
+    );
   }
   return (
     <div>

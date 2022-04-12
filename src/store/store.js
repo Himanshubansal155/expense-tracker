@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthReducer from "../Reducers/AuthReducer";
+import ExpenseReducer from "../Reducers/ExpenseReducer";
 import rootSaga, { sagaMiddleware } from "../saga";
-import counterReducer from "./../Reducers/CounterSlice";
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
     user: AuthReducer,
+    expense: ExpenseReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
