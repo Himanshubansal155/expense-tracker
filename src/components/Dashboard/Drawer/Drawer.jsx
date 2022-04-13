@@ -2,14 +2,9 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,10 +13,11 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { Link, useLocation } from "react-router-dom";
-import { ROUTES } from "../../constants/Routes";
+import { ROUTES } from "../../../constants/Routes";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
-import { COLORS } from "../../constants/Colors";
+import { COLORS } from "../../../constants/Colors";
+import AppTopBar from "../AppTopBar/AppTopBar";
 
 const drawerWidth = 180;
 
@@ -53,24 +49,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-}));
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
 }));
 
 const Drawer = styled(MuiDrawer, {
@@ -134,27 +112,11 @@ export default function MiniDrawer({ children }) {
   return (
     <div style={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={false} className={"bg-primary"}>
-        <Toolbar className="pl-3">
-          <div className="p-2 pl-0 mr-6 flex items-end">
-            <img src="/logo.png" alt="Logo" height={48} width={50} />
-          </div>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 2,
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {pathname}
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <AppTopBar
+        handleDrawerOpen={handleDrawerOpen}
+        pathname={pathname}
+        drawerWidth={drawerWidth}
+      />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader />
         <Divider />
@@ -167,11 +129,13 @@ export default function MiniDrawer({ children }) {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   backgroundColor:
-                    pathname === route.to.split("/")[1] ? COLORS.primary : "",
+                    pathname === route.to.split("/")[1]
+                      ? COLORS.darkPrimary
+                      : "",
                   color:
                     pathname === route.to.split("/")[1] ? "white" : "black",
                 }}
-                className="hover:opacity-70 hover:bg-darkPrimary hover:text-white"
+                className="hover:bg-primary hover:text-white"
               >
                 <ListItemIcon
                   sx={{
@@ -201,11 +165,13 @@ export default function MiniDrawer({ children }) {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                   backgroundColor:
-                    pathname === route.to.split("/")[1] ? COLORS.primary : "",
+                    pathname === route.to.split("/")[1]
+                      ? COLORS.darkPrimary
+                      : "",
                   color:
                     pathname === route.to.split("/")[1] ? "white" : "black",
                 }}
-                className="hover:opacity-70 hover:bg-darkPrimary hover:text-white"
+                className="hover:bg-primary hover:text-white"
               >
                 <ListItemIcon
                   sx={{

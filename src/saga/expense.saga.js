@@ -28,7 +28,7 @@ export function* indexAllExpenses(action) {
     const response = yield call(showAllExpensesApi, action.payload.filters);
     yield put(indexExpenses(response));
   } catch (err) {
-    toastService.showErrorToast(error.message);
+    toastService.showErrorToast(err.message);
     yield put(error(err));
   }
 }
@@ -38,7 +38,7 @@ export function* getExpense(action) {
     const response = yield call(showAllExpensesApi, action.payload.id);
     yield put(getExpenseById(response));
   } catch (err) {
-    toastService.showErrorToast(error.message);
+    toastService.showErrorToast(err.message);
     yield put(error(err));
   }
 }
@@ -53,7 +53,7 @@ export function* updateExpense(action) {
     );
     yield put(getExpenseById(response));
   } catch (err) {
-    toastService.showErrorToast(error.message);
+    toastService.showErrorToast(err.message);
     yield put(error(err));
   }
 }
@@ -64,7 +64,7 @@ export function* deleteUserExpense(action) {
     yield call(deleteExpenseApi, action.payload.id);
     yield put(deleteExpenseFromExpenses(action.payload.index));
   } catch (err) {
-    toastService.showErrorToast(error.message);
+    toastService.showErrorToast(err.message);
     yield put(error(err));
   }
 }
@@ -75,7 +75,7 @@ export function* addUserExpense(action) {
     const response = yield call(addExpenseApi, action.payload.id);
     yield put(addExpense(response));
   } catch (err) {
-    toastService.showErrorToast(error.message);
+    toastService.showErrorToast(err.message);
     yield put(error(err));
   }
 }
