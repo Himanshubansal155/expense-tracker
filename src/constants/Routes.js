@@ -8,5 +8,6 @@ export const ROUTES = {
   SETTINGS: "/Settings",
   BUDGET: "/Budget",
   ANALYTICS: "/Analytics",
-  TRASH: "/Trash"
+  TRASH: "/Trash",
+  PROFILE: "/Profile",
 };

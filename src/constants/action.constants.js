@@ -12,3 +12,4 @@ export const GET_EXPENSE = "getExpense";
 export const UPDATE_EXPENSE = "updateExpense";
 export const DELETE_EXPENSE = "deleteExpense";
 export const ADD_EXPENSE = "addExpense";
+export const SEARCH_EXPENSE = "searchExpense";

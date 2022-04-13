@@ -6,10 +6,11 @@ import { ROUTES } from "../../constants/Routes";
 import Analytics from "../Analytics/Analytics";
 import Budget from "../Budget/Budget";
 import Dashboard from "../Dashboard/Dashboard";
-import MiniDrawer from "../Dashboard/Drawer";
+import MiniDrawer from "../Dashboard/Drawer/Drawer";
 import Expenses from "../Expenses/Expenses";
 import HomePage from "../Home/HomePage";
 import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
 import Settings from "../Settings/Settings";
 import SignUp from "../signup/signup";
 import Speechly from "../Speechly/Speechly";
@@ -48,6 +49,7 @@ const NavigationPage = () => {
             <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
             <Route path={ROUTES.SETTINGS} element={<Settings />} />
             <Route path={ROUTES.TRASH} element={<Trash />} />
+            <Route path={ROUTES.PROFILE} element={<Profile />} />
             <Route path="*" element={<div>Not Found 404</div>} />
           </Routes>
         </MiniDrawer>
