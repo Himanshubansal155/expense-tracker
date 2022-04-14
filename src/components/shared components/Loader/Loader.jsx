@@ -4,12 +4,13 @@ import { COLORS } from "./../../../constants/Colors";
 
 const Loader = ({ className }) => {
   return (
-    <div className={"flex w-full justify-center " + className}>
+    <div className={"flex mt-10 flex-col items-center w-full " + className}>
       <MutatingDots
         ariaLabel="loading-indicator"
         secondaryColor={COLORS.primary}
         color={COLORS.darkPrimary}
       />
+      <span className="animate-ping">Loading</span>
     </div>
   );
 };
