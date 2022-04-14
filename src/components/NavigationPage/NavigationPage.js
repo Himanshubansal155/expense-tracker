@@ -9,7 +9,9 @@ import Dashboard from "../Dashboard/Dashboard";
 import MiniDrawer from "../Dashboard/Drawer/Drawer";
 import Expenses from "../Expenses/Expenses";
 import HomePage from "../Home/HomePage";
+import HomePageLazy from "../Home/HomePage.lazy";
 import Login from "../Login/Login";
+import LoginLazy from "../Login/Login.lazy";
 import Profile from "../Profile/Profile";
 import Settings from "../Settings/Settings";
 import SignUp from "../signup/signup";
@@ -30,8 +32,8 @@ const NavigationPage = () => {
               path={`/`}
               element={<Navigate to={ROUTES.WELCOME} replace />}
             />
-            <Route path={ROUTES.WELCOME} element={<HomePage />} />
-            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.WELCOME} element={<HomePageLazy />} />
+            <Route path={ROUTES.LOGIN} element={<LoginLazy />} />
             <Route path={ROUTES.SIGNUP} element={<SignUp />} />
             <Route path="*" element={<div>Not Found 404</div>} />
           </Routes>

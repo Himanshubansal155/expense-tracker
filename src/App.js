@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavigationPage from "./components/NavigationPage/NavigationPage";
 import { ME_FETCH } from "./constants/action.constants";
@@ -25,10 +25,10 @@ function App() {
     return <Loader />;
   }
   return (
-    <div>
+    <Suspense fallback={<Loader />}>
       <NotificationContainer />
       <NavigationPage />
-    </div>
+    </Suspense>
   );
 }
 
