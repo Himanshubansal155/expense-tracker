@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { LOGGED_OUT } from "../../constants/action.constants";
 import { ROUTES } from "../../constants/Routes";
-import Analytics from "../Analytics/Analytics";
+import Category from "../Category/Category";
 import Budget from "../Budget/Budget";
 import Dashboard from "../Dashboard/Dashboard";
 import MiniDrawer from "../Dashboard/Drawer/Drawer";
@@ -47,7 +47,7 @@ const NavigationPage = () => {
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.EXPENSES} element={<Expenses />} />
             <Route path={ROUTES.BUDGET} element={<Budget />} />
-            <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
+            <Route path={ROUTES.CATEGORY} element={<Category />} />
             <Route path={ROUTES.SETTINGS} element={<Settings />} />
             <Route path={ROUTES.TRASH} element={<Trash />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />

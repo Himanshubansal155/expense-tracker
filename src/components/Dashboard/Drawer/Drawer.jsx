@@ -90,9 +90,9 @@ export default function MiniDrawer({ children }) {
       to: ROUTES.BUDGET,
     },
     {
-      name: "Analytics",
+      name: "Category",
       icon: AssessmentIcon,
-      to: ROUTES.ANALYTICS,
+      to: ROUTES.CATEGORY,
     },
   ];
   const lowerRoutes = [

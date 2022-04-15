@@ -7,7 +7,7 @@ export const ROUTES = {
   EXPENSES: "/Expenses",
   SETTINGS: "/Settings",
   BUDGET: "/Budget",
-  ANALYTICS: "/Analytics",
+  CATEGORY: "/Category",
   TRASH: "/Trash",
   PROFILE: "/Profile",
 };
