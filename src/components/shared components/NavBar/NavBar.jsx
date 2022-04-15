@@ -34,14 +34,6 @@ const NavBar = () => {
             Home
           </NavLink>
           <NavLink
-            to={ROUTES.DASHBOARD}
-            className={({ isActive }) =>
-              isActive ? "button button-active" : "button"
-            }
-          >
-            How it works
-          </NavLink>
-          <NavLink
             to={ROUTES.SIGNUP}
             className={({ isActive }) =>
               isActive ? "button button-active" : "button"
@@ -68,14 +60,6 @@ const NavBar = () => {
             }
           >
             Home
-          </NavLink>
-          <NavLink
-            to={ROUTES.DASHBOARD}
-            className={({ isActive }) =>
-              isActive ? "button button-active" : "button"
-            }
-          >
-            How it works
           </NavLink>
           <NavLink
             to={ROUTES.SIGNUP}

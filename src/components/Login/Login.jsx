@@ -17,7 +17,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import toastService from "./../../services/toastService";
+import toastService from "../../services/toastService";
 import OTPInput, { ResendOTP } from "otp-input-react";
 
 const Login = () => {

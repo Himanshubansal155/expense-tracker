@@ -10,7 +10,7 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import toastService from "./../../services/toastService";
+import toastService from "../../services/toastService";
 import { userSignUpAction } from "../../actions/auth.actions";
 import { useNavigate } from "react-router-dom";
 
