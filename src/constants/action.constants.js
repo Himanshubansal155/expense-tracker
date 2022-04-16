@@ -13,3 +13,9 @@ export const UPDATE_EXPENSE = "updateExpense";
 export const DELETE_EXPENSE = "deleteExpense";
 export const ADD_EXPENSE = "addExpense";
 export const SEARCH_EXPENSE = "searchExpense";
+
+export const SHOW_ALL_CATEGORIES = "showAllCategories";
+export const UPDATE_CATEGORY = "updateCategory";
+export const DELETE_CATEGORY = "deleteCategory";
+export const ADD_CATEGORY = "addCategory";
+export const SEARCH_CATEGORY = "searchCategory";
