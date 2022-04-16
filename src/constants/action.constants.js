@@ -19,3 +19,9 @@ export const UPDATE_CATEGORY = "updateCategory";
 export const DELETE_CATEGORY = "deleteCategory";
 export const ADD_CATEGORY = "addCategory";
 export const SEARCH_CATEGORY = "searchCategory";
+
+export const SHOW_ALL_SUB_CATEGORIES = "showAllSubCategories";
+export const UPDATE_SUB_CATEGORY = "updateSubCategory";
+export const DELETE_SUB_CATEGORY = "deleteSubCategory";
+export const ADD_SUB_CATEGORY = "addSubCategory";
+export const SEARCH_SUB_CATEGORY = "searchSubCategory";

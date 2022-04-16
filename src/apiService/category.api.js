@@ -22,6 +22,16 @@ export const deleteCategoryApi = async (id) => {
   }
 };
 
+export const addCategoryApi = async (data) => {
+  try {
+    const url = BASE_URL + "category";
+    const response = await axios.post(url, data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
+};
+
 export const addSubCategoryApi = async (data) => {
   try {
     const url = BASE_URL + "subcategory";

@@ -1,18 +1,21 @@
 import { call, put, takeEvery, all } from "redux-saga/effects";
 import {
   addCategoryApi,
+  addSubCategoryApi,
   deleteCategoryApi,
   editCategoryApi,
   showAllCategoriesApi,
 } from "../apiService/category.api";
 import {
   ADD_CATEGORY,
+  ADD_SUB_CATEGORY,
   DELETE_CATEGORY,
   SHOW_ALL_CATEGORIES,
   UPDATE_CATEGORY,
 } from "../constants/action.constants";
 import {
   addCategory,
+  addSubCategory,
   deleteCategoryFromCategories,
   error,
   getCategoryById,
@@ -68,11 +71,22 @@ export function* addUserCategory(action) {
     yield put(error(err));
   }
 }
+export function* addUserSubCategory(action) {
+  try {
+    yield put(loading());
+    const response = yield call(addSubCategoryApi, action.payload);
+    yield put(addSubCategory(response));
+  } catch (err) {
+    toastService.showErrorToast(err.message);
+    yield put(error(err));
+  }
+}
 
 export function* watchCategoryChanged() {
   yield all([takeEvery(SHOW_ALL_CATEGORIES, indexAllCategories)]);
   yield all([takeEvery(UPDATE_CATEGORY, updateCategory)]);
   yield all([takeEvery(DELETE_CATEGORY, deleteUserCategory)]);
   yield all([takeEvery(ADD_CATEGORY, addUserCategory)]);
+  yield all([takeEvery(ADD_SUB_CATEGORY, addUserSubCategory)]);
   yield;
 }

@@ -7,6 +7,7 @@ import Input from "../../shared components/Input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_CATEGORY,
+  ADD_SUB_CATEGORY,
   SHOW_ALL_CATEGORIES,
 } from "../../../constants/action.constants";
 import { MenuItem } from "@mui/material";
@@ -21,13 +22,15 @@ const CreateCategory = ({ create, handleClose }) => {
   const handleCategoryCreate = () => {
     if (title) {
       dispatch({ type: ADD_CATEGORY, payload: { title } });
+      handleClose();
     } else {
       toastService.showErrorToast("Please Enter Title");
     }
   };
   const handleSubCategoryCreate = () => {
     if (title && categoryId) {
-      console.log("Sub Category create", title, categoryId);
+      dispatch({ type: ADD_SUB_CATEGORY, payload: { title, id: categoryId } });
+      handleClose();
     } else {
       if (!title) {
         toastService.showErrorToast("Please Enter Title");
@@ -80,7 +83,15 @@ const CreateCategory = ({ create, handleClose }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            {!type && (
+            {!type && categories.length === 0 && (
+              <div
+                className="text-red-400 mt-5 underline text-center cursor-pointer"
+                onClick={() => setType(true)}
+              >
+                Please Create Category First
+              </div>
+            )}
+            {!type && categories.length > 0 && (
               <Input
                 label="Select Category"
                 select

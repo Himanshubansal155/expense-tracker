@@ -7,6 +7,8 @@ const initialState = {
   error: undefined,
   filterParams: {},
   isCategoriesLoaded: false,
+  subCategories: [],
+  isSubCategoriesLoaded: false,
 };
 
 export const categorySlice = createSlice({
@@ -37,6 +39,11 @@ export const categorySlice = createSlice({
       state.categories = sortArray(state.categories);
       state.isLoading = false;
     },
+    addSubCategory: (state, action) => {
+      state.subCategories.push(action.payload);
+      state.subCategories = sortArray(state.subCategories);
+      state.isLoading = false;
+    },
     error: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
@@ -51,6 +58,7 @@ export const {
   deleteCategoryFromCategories,
   addCategory,
   getCategoryById,
+  addSubCategory,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;
