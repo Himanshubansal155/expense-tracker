@@ -24,6 +24,11 @@ export const categorySlice = createSlice({
       state.isLoading = false;
       state.isCategoriesLoaded = true;
     },
+    indexSubCategories: (state, action) => {
+      state.subCategories = action.payload;
+      state.isLoading = false;
+      state.isSubCategoriesLoaded = true;
+    },
     getCategoryById: (state, action) => {
       state.categories[
         state.categories.findIndex((e) => e.id === action.payload.id)
@@ -59,6 +64,7 @@ export const {
   addCategory,
   getCategoryById,
   addSubCategory,
+  indexSubCategories,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

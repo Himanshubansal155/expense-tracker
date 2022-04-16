@@ -5,12 +5,14 @@ import {
   deleteCategoryApi,
   editCategoryApi,
   showAllCategoriesApi,
+  showAllSubCategoriesApi,
 } from "../apiService/category.api";
 import {
   ADD_CATEGORY,
   ADD_SUB_CATEGORY,
   DELETE_CATEGORY,
   SHOW_ALL_CATEGORIES,
+  SHOW_ALL_SUB_CATEGORIES,
   UPDATE_CATEGORY,
 } from "../constants/action.constants";
 import {
@@ -20,6 +22,7 @@ import {
   error,
   getCategoryById,
   indexCategories,
+  indexSubCategories,
   loading,
 } from "../Reducers/CategoryReducer";
 import toastService from "../services/toastService";
@@ -29,6 +32,21 @@ export function* indexAllCategories(action) {
     yield put(loading());
     const response = yield call(showAllCategoriesApi, action.payload?.filters);
     yield put(indexCategories(response));
+  } catch (err) {
+    toastService.showErrorToast(err.message);
+    yield put(error(err));
+  }
+}
+
+export function* indexAllSubCategories(action) {
+  try {
+    yield put(loading());
+    const response = yield call(
+      showAllSubCategoriesApi,
+      action.payload?.id,
+      action.payload?.filters
+    );
+    yield put(indexSubCategories(response));
   } catch (err) {
     toastService.showErrorToast(err.message);
     yield put(error(err));
@@ -88,5 +106,6 @@ export function* watchCategoryChanged() {
   yield all([takeEvery(DELETE_CATEGORY, deleteUserCategory)]);
   yield all([takeEvery(ADD_CATEGORY, addUserCategory)]);
   yield all([takeEvery(ADD_SUB_CATEGORY, addUserSubCategory)]);
+  yield all([takeEvery(SHOW_ALL_SUB_CATEGORIES, indexAllSubCategories)]);
   yield;
 }

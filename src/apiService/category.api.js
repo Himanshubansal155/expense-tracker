@@ -51,3 +51,12 @@ export const showAllCategoriesApi = async (filters) => {
     throw new Error(error.data.message);
   }
 };
+export const showAllSubCategoriesApi = async (id, filters) => {
+  try {
+    const url = BASE_URL + `show-subcategories/${id}`;
+    const response = await get(url, { params: filters });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
+};
