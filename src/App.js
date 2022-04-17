@@ -8,6 +8,7 @@ import "react-notifications/lib/notifications.css";
 import Firebase from "./services/firebase.service";
 import { initializeApp } from "firebase/app";
 import Loader from "./components/shared components/Loader/Loader";
+import "./scss/Main.scss";
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem(AUTH_TOKEN);

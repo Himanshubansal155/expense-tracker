@@ -5,7 +5,7 @@ import { get } from "./base.api";
 export const editCategoryApi = async (id, data) => {
   try {
     const url = BASE_URL + `category/${id}`;
-    const response = await axios.put(url, { data });
+    const response = await axios.put(url, data);
     return response.data;
   } catch (error) {
     throw new Error(error.data.message);

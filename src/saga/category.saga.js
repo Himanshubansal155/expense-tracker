@@ -62,6 +62,7 @@ export function* updateCategory(action) {
       action.payload.data
     );
     yield put(getCategoryById(response));
+    toastService.showtoast("Category Updated Sucessfully");
   } catch (err) {
     toastService.showErrorToast(err.message);
     yield put(error(err));
@@ -72,7 +73,8 @@ export function* deleteUserCategory(action) {
   try {
     yield put(loading());
     yield call(deleteCategoryApi, action.payload.id);
-    yield put(deleteCategoryFromCategories(action.payload.index));
+    yield put(deleteCategoryFromCategories(action.payload));
+    toastService.showtoast("Category Deleted Sucessfully");
   } catch (err) {
     toastService.showErrorToast(err.message);
     yield put(error(err));

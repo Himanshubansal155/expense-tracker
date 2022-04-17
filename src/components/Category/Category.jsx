@@ -5,19 +5,35 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CreateCategory from "./CreateCategory/CreateCategory";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  DELETE_CATEGORY,
   SHOW_ALL_CATEGORIES,
   SHOW_ALL_SUB_CATEGORIES,
 } from "../../constants/action.constants";
 import "./CreateCategory/CreateCategory.scss";
 import Loader from "../shared components/Loader/Loader";
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import Delete from "../shared components/Delete/Delete";
 
 const Category = () => {
   const [type, setType] = useState(1);
   const categoryStore = useSelector((state) => state.category);
   const [create, setCreate] = useState(false);
   const [categoryId, setCategoryId] = useState("");
+  const [deleteId, setDeleteId] = useState(null);
   const dispatch = useDispatch();
+  const [editCategory, setEditCategory] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event, id) => {
+    setDeleteId(id);
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setDeleteId(null);
+    setAnchorEl(null);
+  };
   useEffect(() => {
     if (type === 1) {
       if (!categoryStore.isCategoriesLoaded) {
@@ -33,6 +49,10 @@ const Category = () => {
   }, [categoryId]);
   const categories = categoryStore.categories;
   const subCategories = categoryStore.subCategories;
+  const handleDeleteCategory = () => {
+    dispatch({ type: DELETE_CATEGORY, payload: { id: deleteId } });
+    handleClose();
+  };
   return (
     <div className="">
       <div className="flex justify-between items-center border-b-2">
@@ -91,15 +111,28 @@ const Category = () => {
                 >
                   <div className="flex justify-between items-center">
                     <span className="text-2xl">{category.title}</span>
-                    <span>Rs. {category.totalAmount}</span>
+                    <span>Rs.{category.totalAmount}</span>
                   </div>
-                  Total Expense: 20
-                  <div className="flex space-x-2">
-                    <div className="px-3 text-sm py-1 bg-gray-50 border border-gray-200 max-w-min rounded-full">
-                      diesel
+                  <div className="flex justify-between space-x-3 items-center">
+                    <div className="flex space-x-2 mt-2">
+                      {category.subCategory?.map((sub, index) => (
+                        <div
+                          className="px-3 text-sm py-1 bg-gray-50 border border-gray-200 max-w-min rounded-full"
+                          key={index}
+                        >
+                          {sub.title}
+                        </div>
+                      ))}
                     </div>
-                    <div className="px-3 text-sm py-1 bg-gray-50 border border-gray-200 max-w-min rounded-full">
-                      Petrol
+                    <div className="flex space-x-3 text-darkPrimary py-1">
+                      <EditIcon
+                        className="cursor-pointer"
+                        onClick={() => setEditCategory(category)}
+                      />
+                      <DeleteIcon
+                        className="cursor-pointer"
+                        onClick={(event) => handleClick(event, category.id)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -115,7 +148,7 @@ const Category = () => {
                     Found
                   </div>
                 )}
-                {subCategories.length > 0 && (
+                {categoryId && subCategories.length > 0 && (
                   <div>
                     {subCategories.map((subCategory) => (
                       <div>{subCategory.title}</div>
@@ -129,6 +162,17 @@ const Category = () => {
         </div>
       )}
       <CreateCategory create={create} handleClose={() => setCreate(false)} />
+      <CreateCategory
+        create={!!editCategory}
+        handleClose={() => setEditCategory(null)}
+        editTitle={editCategory?.title}
+        editCategoryId={editCategory?.id}
+      />
+      <Delete
+        handleClose={handleClose}
+        handleSubmit={handleDeleteCategory}
+        anchorEl={anchorEl}
+      />
     </div>
   );
 };

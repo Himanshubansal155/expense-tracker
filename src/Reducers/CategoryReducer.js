@@ -36,7 +36,10 @@ export const categorySlice = createSlice({
       state.isLoading = false;
     },
     deleteCategoryFromCategories: (state, action) => {
-      state.categories = state.categories.splice(action.payload, 1);
+      state.categories.splice(
+        state.categories.findIndex((e) => e.id === action.payload.id),
+        1
+      );
       state.isLoading = false;
     },
     addCategory: (state, action) => {

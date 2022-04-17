@@ -9,20 +9,44 @@ import {
   ADD_CATEGORY,
   ADD_SUB_CATEGORY,
   SHOW_ALL_CATEGORIES,
+  UPDATE_CATEGORY,
 } from "../../../constants/action.constants";
 import { MenuItem } from "@mui/material";
 import toastService from "../../../services/toastService";
 
-const CreateCategory = ({ create, handleClose }) => {
+const CreateCategory = ({
+  create,
+  handleClose,
+  editTitle,
+  editCategoryId,
+  editSubCategoryId,
+}) => {
   const [type, setType] = useState(true);
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const categoryStore = useSelector((state) => state.category);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (editTitle) {
+      setTitle(editTitle);
+    }
+    if (editCategoryId) {
+      setCategoryId(editCategoryId);
+    }
+    if (editSubCategoryId) {
+      setType(false);
+    }
+  }, [editTitle, editCategoryId]);
   const handleCategoryCreate = () => {
     if (title) {
-      dispatch({ type: ADD_CATEGORY, payload: { title } });
+      editCategoryId
+        ? dispatch({
+            type: UPDATE_CATEGORY,
+            payload: { id: editCategoryId, data: { title } },
+          })
+        : dispatch({ type: ADD_CATEGORY, payload: { title } });
       handleClose();
+      setTitle("");
     } else {
       toastService.showErrorToast("Please Enter Title");
     }
@@ -31,6 +55,7 @@ const CreateCategory = ({ create, handleClose }) => {
     if (title && categoryId) {
       dispatch({ type: ADD_SUB_CATEGORY, payload: { title, id: categoryId } });
       handleClose();
+      setTitle("");
     } else {
       if (!title) {
         toastService.showErrorToast("Please Enter Title");
@@ -51,7 +76,9 @@ const CreateCategory = ({ create, handleClose }) => {
       <div className="bg-white rounded absolute left-10 sm:left-20 top-20 md:left-1/3 focus:outline-none">
         <div className="text-xl text-gray-400 p-3 flex justify-between items-start relative border border-gray-200">
           <div className="flex justify-between">
-            <span>New {type ? "Category" : "Sub Category"}</span>
+            <span>
+              {editTitle ? "Edit" : "New"} {type ? "Category" : "Sub Category"}
+            </span>
           </div>
           <CancelIcon
             className="text-darkPrimary text-xl cursor-pointer"
@@ -63,7 +90,7 @@ const CreateCategory = ({ create, handleClose }) => {
             className={`w-1/2 p-2 border-b border-r border-gray-300 hover:bg-gray-300 ${
               type && "bg-gray-200"
             }`}
-            onClick={() => setType(true)}
+            onClick={() => !editCategoryId && setType(true)}
           >
             Category
           </div>
@@ -71,7 +98,7 @@ const CreateCategory = ({ create, handleClose }) => {
             className={`w-1/2 p-2 border-b border-gray-300 hover:bg-gray-300 ${
               !type && "bg-gray-200"
             }`}
-            onClick={() => setType(false)}
+            onClick={() => !editCategoryId && setType(false)}
           >
             SubCategory
           </div>
@@ -121,7 +148,7 @@ const CreateCategory = ({ create, handleClose }) => {
                 }
               }}
             >
-              Create
+              {editTitle ? "Save" : "Create"}
             </ButtonField>
           </div>
         </div>
