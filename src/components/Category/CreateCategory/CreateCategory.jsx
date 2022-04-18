@@ -36,7 +36,7 @@ const CreateCategory = ({
     if (editSubCategoryId) {
       setType(false);
     }
-  }, [editTitle, editCategoryId]);
+  }, [editTitle, editCategoryId, editSubCategoryId]);
   const handleCategoryCreate = () => {
     if (title) {
       editCategoryId

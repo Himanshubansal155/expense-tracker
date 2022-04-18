@@ -13,21 +13,14 @@ const convert = (event) => {
   });
 };
 
-export const uploadFileOrImage = async (event) => {
+export const uploadFileOrImage = async (file) => {
   try {
-    const url = BASE_URL + "/upload";
-    const file = event.target.files[0];
-    convert(file).then((data) => {
-      post(url, {
-        image: data,
-      })
-        .then((res) => {
-          return res;
-        })
-        .catch((error) => {
-          throw error;
-        });
+    const url = BASE_URL + "image";
+    const data = await convert(file);
+    const imageData = await post(url, {
+      image: data,
     });
+    return imageData.data;
   } catch (error) {
     throw error;
   }
