@@ -6,6 +6,7 @@ import CreateExpense from "./CreateExpense/CreateExpense";
 
 const Expenses = () => {
   const [create, setCreate] = useState(false);
+  const [editExpense, setEditExpense] = useState(null);
   const expenses = useSelector((state) => state?.expense);
   if (expenses.isLoading) {
     return <Loader />;
@@ -21,6 +22,13 @@ const Expenses = () => {
       </div>
       {create && (
         <CreateExpense create={create} handleClose={() => setCreate(false)} />
+      )}
+      {!!editExpense && (
+        <CreateExpense
+          create={!!editExpense}
+          handleClose={() => setEditExpense(null)}
+          expense={editExpense}
+        />
       )}
     </div>
   );

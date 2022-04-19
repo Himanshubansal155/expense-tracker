@@ -5,6 +5,7 @@ const initialState = {
   expense: undefined,
   expenses: [],
   isLoading: false,
+  isExpenseLoading: false,
   error: undefined,
   filterParams: {},
 };
@@ -17,27 +18,32 @@ export const expenseSlice = createSlice({
       state.isLoading = true;
       state.error = undefined;
     },
+    isExpenseLoading: (state) => {
+      state.isExpenseLoading = true;
+      state.error = undefined;
+    },
     indexExpenses: (state, action) => {
       state.expenses = action.payload;
       state.isLoading = false;
     },
     getExpenseById: (state, action) => {
       state.expense = action.payload;
-      state.isLoading = false;
+      state.isExpenseLoading = false;
     },
     deleteExpenseFromExpenses: (state, action) => {
-      state.expenses = state.expenses.splice(action.payload, 1);
+      state.expenses.splice(action.payload, 1);
       state.expense = undefined;
       state.isLoading = false;
     },
     addExpense: (state, action) => {
       state.expenses.push(action.payload);
       state.expenses = sortArray(state.expenses);
-      state.isLoading = false;
+      state.isExpenseLoading = false;
     },
     error: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+      state.isExpenseLoading = false;
     },
   },
 });
@@ -49,6 +55,7 @@ export const {
   getExpenseById,
   deleteExpenseFromExpenses,
   addExpense,
+  isExpenseLoading,
 } = expenseSlice.actions;
 
 export default expenseSlice.reducer;

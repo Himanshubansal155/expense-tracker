@@ -6,11 +6,16 @@ import Input from "../../shared components/Input/Input";
 import ButtonField from "../../shared components/Button/Button";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryStoreSelector } from "../../../store/stores.selector";
-import { LinearProgress, MenuItem } from "@mui/material";
 import {
+  categoryStoreSelector,
+  expenseStoreSelector,
+} from "../../../store/stores.selector";
+import { CircularProgress, LinearProgress, MenuItem } from "@mui/material";
+import {
+  ADD_EXPENSE,
   SHOW_ALL_CATEGORIES,
   SHOW_ALL_SUB_CATEGORIES,
+  UPDATE_EXPENSE,
 } from "../../../constants/action.constants";
 import { uploadFileOrImage } from "../../../apiService/image.api";
 import Dropzone from "react-dropzone";
@@ -29,13 +34,11 @@ const loginSchema = Yup.object({
   date: Yup.string().required("Date is required"),
 });
 
-const CreateExpense = ({ create, handleClose, editTitle }) => {
+const CreateExpense = ({ create, handleClose, expense }) => {
   const categoryStore = useSelector(categoryStoreSelector);
+  const expenseStore = useSelector(expenseStoreSelector);
   const [fileLoading, setFileLoading] = useState(false);
   const dispatch = useDispatch();
-  const handleExpenseCreate = (e) => {
-    console.log("created", e);
-  };
   const onClose = () => {
     handleClose();
     formik.resetForm({});
@@ -44,17 +47,29 @@ const CreateExpense = ({ create, handleClose, editTitle }) => {
   const subCategories = categoryStore.subCategories;
   const formik = useFormik({
     initialValues: {
-      title: editTitle || "",
-      description: "",
-      amount: undefined,
-      date: "",
-      time: "",
-      categoryId: "",
-      subCategoryId: "",
-      meta: undefined,
+      title: expense.title || "",
+      description: expense.description || "",
+      amount: expense.amount || undefined,
+      date: expense.date || "",
+      time: expense.time || undefined,
+      categoryId: expense.categoryId || "",
+      subCategoryId: expense.subCategoryId || "",
+      meta: expense.meta || undefined,
     },
     validationSchema: loginSchema,
-    onSubmit: handleExpenseCreate,
+    onSubmit: (values) => {
+      if (!!expense) {
+        dispatch({
+          type: UPDATE_EXPENSE,
+          payload: { id: expense.id, data: values, onClose },
+        });
+      } else {
+        dispatch({
+          type: ADD_EXPENSE,
+          payload: { data: values, onClose },
+        });
+      }
+    },
   });
   useEffect(() => {
     if (!categoryStore.isCategoriesLoaded) {
@@ -72,7 +87,7 @@ const CreateExpense = ({ create, handleClose, editTitle }) => {
       <div className="bg-white border-2 rounded-2xl absolute left-10 w-4/5 lg:w-2/5 lg:left-1/3 top-20 focus:outline-none">
         <div className="text-xl text-gray-400 p-3 flex justify-between items-start relative border-b border-gray-200">
           <div className="flex justify-between overflow-auto">
-            <span>{editTitle ? "Edit" : "New"} Expense</span>
+            <span>{!!expense ? "Edit" : "New"} Expense</span>
           </div>
           <CancelIcon
             className="text-darkPrimary text-xl cursor-pointer"
@@ -217,14 +232,15 @@ const CreateExpense = ({ create, handleClose, editTitle }) => {
                 {formik.values.meta && (
                   <div className="text-green-600 border p-2 border-green-600 flex flex-col items-center">
                     <div>File Uploaded</div>
-                    {formik.values.meta.file_type === "image" && (
-                      <img
-                        src={formik.values.meta.url}
-                        width={100}
-                        height={100}
-                        alt="Uploaded Images"
-                      />
-                    )}
+                    {formik.values.meta.file_type === "image" &&
+                      formik.values.meta.type != "pdf" && (
+                        <img
+                          src={formik.values.meta.url}
+                          width={100}
+                          height={100}
+                          alt="Uploaded Images"
+                        />
+                      )}
                     <div
                       className="text-red-500 border border-red-500 cursor-pointer mt-2 px-4 py-2"
                       onClick={() => formik.setFieldValue("meta", undefined)}
@@ -243,7 +259,14 @@ const CreateExpense = ({ create, handleClose, editTitle }) => {
                   }}
                   onClick={formik.handleSubmit}
                 >
-                  {editTitle ? "Save" : "Create"}
+                  {!!expense ? "Save" : "Create"}
+                  {expenseStore.isExpenseLoading && (
+                    <CircularProgress
+                      className="ml-3"
+                      size={20}
+                      color="inherit"
+                    />
+                  )}
                 </ButtonField>
               </div>
             </div>

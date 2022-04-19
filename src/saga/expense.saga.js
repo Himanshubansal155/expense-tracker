@@ -19,6 +19,7 @@ import {
   getExpenseById,
   deleteExpenseFromExpenses,
   addExpense,
+  isExpenseLoading,
 } from "../Reducers/ExpenseReducer";
 import toastService from "../services/toastService";
 
@@ -45,12 +46,14 @@ export function* getExpense(action) {
 
 export function* updateExpense(action) {
   try {
-    yield put(loading());
+    yield put(isExpenseLoading());
     const response = yield call(
       editExpenseApi,
       action.payload.id,
       action.payload.data
     );
+    toastService.showtoast("Expense Updated Successfully");
+    action.payload.onClose();
     yield put(getExpenseById(response));
   } catch (err) {
     toastService.showErrorToast(err.message);
@@ -63,6 +66,7 @@ export function* deleteUserExpense(action) {
     yield put(loading());
     yield call(deleteExpenseApi, action.payload.id);
     yield put(deleteExpenseFromExpenses(action.payload.index));
+    toastService.showtoast("Expense Deleted Successfully");
   } catch (err) {
     toastService.showErrorToast(err.message);
     yield put(error(err));
@@ -71,8 +75,10 @@ export function* deleteUserExpense(action) {
 
 export function* addUserExpense(action) {
   try {
-    yield put(loading());
-    const response = yield call(addExpenseApi, action.payload.id);
+    yield put(isExpenseLoading());
+    const response = yield call(addExpenseApi, action.payload.data);
+    toastService.showtoast("Expense Created Successfully");
+    action.payload.onClose();
     yield put(addExpense(response));
   } catch (err) {
     toastService.showErrorToast(err.message);

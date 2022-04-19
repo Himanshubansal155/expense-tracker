@@ -15,7 +15,7 @@ export const showExpenseApi = async (id) => {
 export const editExpenseApi = async (id, data) => {
   try {
     const url = BASE_URL + `expense/${id}`;
-    const response = await axios.put(url, { data });
+    const response = await axios.put(url, data);
     return response.data;
   } catch (error) {
     throw new Error(error.data.message);
@@ -35,7 +35,7 @@ export const deleteExpenseApi = async (id) => {
 export const addExpenseApi = async (data) => {
   try {
     const url = BASE_URL + "expense";
-    const response = await axios.post(url, { data });
+    const response = await axios.post(url, data);
     return response.data;
   } catch (error) {
     throw new Error(error.data.message);
