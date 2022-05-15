@@ -6,7 +6,7 @@ export const ROUTES = {
   SIGNUP: "/Signup",
   EXPENSES: "/Expenses",
   SETTINGS: "/Settings",
-  BUDGET: "/Budget",
+  REPORTS: "/Reports",
   CATEGORY: "/Category",
   TRASH: "/Trash",
   PROFILE: "/Profile",

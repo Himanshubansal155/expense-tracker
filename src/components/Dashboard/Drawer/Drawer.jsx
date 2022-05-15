@@ -85,9 +85,9 @@ export default function MiniDrawer({ children }) {
       to: ROUTES.EXPENSES,
     },
     {
-      name: "Budget",
+      name: "Reports",
       icon: ShoppingBagIcon,
-      to: ROUTES.BUDGET,
+      to: ROUTES.REPORTS,
     },
     {
       name: "Category",
@@ -100,11 +100,6 @@ export default function MiniDrawer({ children }) {
       name: "Settings",
       icon: SettingsApplicationsIcon,
       to: ROUTES.SETTINGS,
-    },
-    {
-      name: "Trash",
-      icon: RestoreFromTrashIcon,
-      to: ROUTES.TRASH,
     },
   ];
 

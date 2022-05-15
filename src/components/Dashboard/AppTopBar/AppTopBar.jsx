@@ -112,18 +112,10 @@ const AppTopBar = ({ drawerWidth, pathname, handleDrawerOpen }) => {
             <div className="flex flex-col p-2 w-40">
               <span
                 className="p-1 my-1 hover:bg-primary cursor-pointer flex items-center"
-                onClick={() => navigate(ROUTES.PROFILE)}
+                onClick={() => navigate(ROUTES.SETTINGS)}
               >
                 <PersonIcon fontSize="small" className="mr-1" />
-                Profile
-              </span>
-              <hr />
-              <span
-                className="p-1 my-1 hover:bg-primary cursor-pointer flex items-center"
-                onClick={() => navigate(ROUTES.TRASH)}
-              >
-                <DeleteIcon fontSize="small" className="mr-1" />
-                Trash
+                Settings
               </span>
               <hr />
               <span

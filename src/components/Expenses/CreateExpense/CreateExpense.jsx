@@ -47,14 +47,14 @@ const CreateExpense = ({ create, handleClose, expense }) => {
   const subCategories = categoryStore.subCategories;
   const formik = useFormik({
     initialValues: {
-      title: expense.title || "",
-      description: expense.description || "",
-      amount: expense.amount || undefined,
-      date: expense.date || "",
-      time: expense.time || undefined,
-      categoryId: expense.categoryId || "",
-      subCategoryId: expense.subCategoryId || "",
-      meta: expense.meta || undefined,
+      title: expense?.title || "",
+      description: expense?.description || "",
+      amount: expense?.amount || undefined,
+      date: expense?.date || "",
+      time: expense?.time || undefined,
+      categoryId: expense?.categoryId || "",
+      subCategoryId: expense?.subCategoryId || "",
+      meta: expense?.meta || undefined,
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {

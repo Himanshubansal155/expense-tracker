@@ -46,10 +46,9 @@ const NavigationPage = () => {
             />
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.EXPENSES} element={<Expenses />} />
-            <Route path={ROUTES.BUDGET} element={<Budget />} />
+            <Route path={ROUTES.REPORTS} element={<Budget />} />
             <Route path={ROUTES.CATEGORY} element={<Category />} />
             <Route path={ROUTES.SETTINGS} element={<Settings />} />
-            <Route path={ROUTES.TRASH} element={<Trash />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
