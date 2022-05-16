@@ -76,14 +76,14 @@ const SignUp = () => {
   };
   return (
     <>
-      <div className="h-screen bg-white flex flex-col md:flex-row">
-        <div className="h-screen bg-purple-700 md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
-          <div className="h-3/4 w-3/4 bg-purple-700 md:mt-20 shadow-2xl"> </div>
+      <div className="h-screen flex flex-col md:flex-row image">
+        <div className="h-4/5 md:h-full md:w-2/5 flex items-end justify-center md:justify-end md:items-start">
+          <div className="h-3/4 w-3/4 bg-primary md:mt-20 shadow-2xl"> </div>
         </div>
 
-        <div className="h-screen bg-white md:w-3/5 ">
+        <div className="h-screen md:w-3/5 ">
           <div id="recaptcha-container"></div>
-          <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white py-4 sm:p-10 md:mt-20 shadow-2xl">
+          <div className="md:h-3/4 w-3/4 md:float-left mx-auto md:mx-0 bg-white py-4 sm:p-10 md:mt-20 shadow-2xl mb-10 md:mb-0">
             {!form ? (
               <SignupForm onSubmit={signInOtp} />
             ) : (
