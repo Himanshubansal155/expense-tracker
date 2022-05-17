@@ -26,7 +26,7 @@ import toastService from "../services/toastService";
 export function* indexAllExpenses(action) {
   try {
     yield put(loading());
-    const response = yield call(showAllExpensesApi, action.payload.filters);
+    const response = yield call(showAllExpensesApi, action.payload?.filters);
     yield put(indexExpenses(response));
   } catch (err) {
     toastService.showErrorToast(err.message);
