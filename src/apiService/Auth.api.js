@@ -55,8 +55,22 @@ export const me = async () => {
   }
 };
 
-export const meChange = async (data) => {
-  const url = BASE_URL + "me";
-  const response = await axios.put(url, data);
-  return response.data;
+export const editUserApi = async (data) => {
+  try {
+    const url = BASE_URL + "me";
+    const response = await axios.put(url, data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
+};
+
+export const deleteUserApi = async () => {
+  try {
+    const url = BASE_URL + "me";
+    const response = await axios.delete(url);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
 };

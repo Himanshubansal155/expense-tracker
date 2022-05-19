@@ -1,23 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import SettingsCard from "./SettingsCard/SettingsCard";
 import ErrorIcon from "@mui/icons-material/Error";
 import ButtonField from "../shared components/Button/Button";
+import Input from "./../shared components/Input/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { userStoreSelector } from "../../store/stores.selector";
+import { userDeleteAction, userUpdateAction } from "../../actions/auth.actions";
+import toastService from "../../services/toastService";
+import { CircularProgress } from "@mui/material";
 
 const Settings = () => {
+  const user = useSelector(userStoreSelector);
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    phone: "",
+    name: "",
+    confirmPassword: "",
+  });
+  const handleChange = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
+  const handleDelete = () => {
+    dispatch(userDeleteAction);
+  };
+  const handleSubmit = (type) => {
+    if (type === "password") {
+      if (form.password === form.confirmPassword) {
+      } else {
+        toastService.showErrorToast("Both Passwords Not same");
+      }
+    } else {
+      try {
+        dispatch(userUpdateAction({ [type]: form[type] }));
+      } catch (error) {
+        toastService.showErrorToast(error);
+      }
+    }
+  };
+  const SaveButton = (type) => (
+    <div className="flex justify-center">
+      <ButtonField
+        className="bg-darkPrimary mx-auto mt-3 w-80"
+        onClick={() => handleSubmit(type)}
+      >
+        Save
+        {user.isLoading && <CircularProgress size={20} color="inherit" />}
+      </ButtonField>
+    </div>
+  );
   return (
     <div>
       <div className="flex flex-col p-10 space-y-5">
-        <SettingsCard title={"Change Username"}>
-          <div>New Username</div>
+        <SettingsCard title={"Change Username"} subTitle={user.data.name}>
+          <div className="w-full px-5">
+            <Input
+              label="Enter New Username"
+              onChange={handleChange}
+              name="name"
+            />
+            {SaveButton("name")}
+          </div>
+        </SettingsCard>
+        <SettingsCard title={"Change Email"} subTitle={user.data.email}>
+          <div className="w-full px-5">
+            <Input
+              label="Enter New Email"
+              onChange={handleChange}
+              name="email"
+            />
+            {SaveButton("email")}
+          </div>
+        </SettingsCard>
+        <SettingsCard title={"Change Phone Number"} subTitle={user.data.phone}>
+          <div className="w-full px-5">
+            <Input
+              label="Enter New Phone Number"
+              onChange={handleChange}
+              name="phone"
+            />
+            {SaveButton("phone")}
+          </div>
         </SettingsCard>
         <SettingsCard title={"Change Password"}>
-          <div>New password</div>
-        </SettingsCard>
-        <SettingsCard title={"Change Email"}>
-          <div>New Email</div>
-        </SettingsCard>
-        <SettingsCard title={"Change Phone Number"}>
-          <div>New Phone Number</div>
+          <div className="w-full px-5">
+            <Input
+              type="password"
+              label="New Password"
+              onChange={handleChange}
+              name="password"
+            />
+            <Input
+              label="Confirm Password"
+              onChange={handleChange}
+              name="confirmPassword"
+            />
+            {SaveButton("password")}
+          </div>
         </SettingsCard>
         <SettingsCard title={"Delete User"}>
           <div className="flex justify-between w-full">
@@ -31,8 +111,12 @@ const Settings = () => {
               <ButtonField
                 buttonstyle={{ backgroundColor: "red", opacity: 0.5 }}
                 hoverstyle={{ backgroundColor: "red", opacity: 1 }}
+                onClick={handleDelete}
               >
                 Yes
+                {user.isLoading && (
+                  <CircularProgress size={20} color="inherit" />
+                )}
               </ButtonField>
               <ButtonField
                 buttonstyle={{ borderColor: "green", color: "green" }}

@@ -21,6 +21,12 @@ export const authSlice = createSlice({
       state.data = user;
       state.error = undefined;
     },
+    updateCompleted: (state, action) => {
+      const user = action.payload;
+      state.isLoading = false;
+      state.data = user;
+      state.error = undefined;
+    },
     loginCompleted: (state, action) => {
       const user = action.payload;
       state.loginStatus = LOGGED_IN;
@@ -48,6 +54,7 @@ export const {
   fetchCompleted,
   logoutUser,
   loading,
+  updateCompleted,
 } = authSlice.actions;
 
 export default authSlice.reducer;
