@@ -2,6 +2,7 @@ import {
   ME_DELETE_USER,
   ME_LOGIN,
   ME_LOGIN_MOBILE,
+  ME_PASSWORD_VERIFY,
   ME_SIGNUP,
   ME_UPDATE_DETAILS,
 } from "../constants/action.constants";
@@ -25,6 +26,11 @@ export const userUpdateAction = (data) => ({
   type: ME_UPDATE_DETAILS,
   payload: { data },
 });
+
 export const userDeleteAction = () => ({
   type: ME_DELETE_USER,
+});
+export const userVerifyAction = (data) => ({
+  type: ME_PASSWORD_VERIFY,
+  payload: { data },
 });

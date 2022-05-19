@@ -5,6 +5,7 @@ const initialState = {
   data: undefined,
   loginStatus: LOGGED_OUT,
   isLoading: false,
+  isVerified: false,
 };
 
 export const authSlice = createSlice({
@@ -44,6 +45,12 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.loginStatus = LOGGED_OUT;
       state.error = undefined;
+      state.isVerified = false;
+    },
+    verified: (state) => {
+      state.isVerified = true;
+      state.isLoading = false;
+      state.error = undefined;
     },
   },
 });
@@ -55,6 +62,7 @@ export const {
   logoutUser,
   loading,
   updateCompleted,
+  verified,
 } = authSlice.actions;
 
 export default authSlice.reducer;

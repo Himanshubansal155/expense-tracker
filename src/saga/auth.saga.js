@@ -7,6 +7,7 @@ import {
   loginMobile,
   editUserApi,
   deleteUserApi,
+  verifyPasswordApi,
 } from "../apiService/Auth.api";
 import {
   ME_DELETE_USER,
@@ -14,6 +15,7 @@ import {
   ME_LOGIN,
   ME_LOGIN_MOBILE,
   ME_LOGOUT,
+  ME_PASSWORD_VERIFY,
   ME_SIGNUP,
   ME_UPDATE_DETAILS,
 } from "../constants/action.constants";
@@ -24,6 +26,7 @@ import {
   logoutUser,
   loading,
   updateCompleted,
+  verified,
 } from "../Reducers/AuthReducer";
 import toastService from "../services/toastService";
 
@@ -103,7 +106,18 @@ export function* deleteUser() {
       yield call(logout);
       yield put(logoutUser());
     }
-    yield put(updateCompleted(response));
+  } catch (error) {
+    toastService.showErrorToast(error.message);
+    yield put(loginError(error));
+  }
+}
+export function* verifyUserPassword(action) {
+  try {
+    yield put(loading());
+    const response = yield call(verifyPasswordApi, action.payload.data);
+    if (!!response) {
+      yield put(verified());
+    }
   } catch (error) {
     toastService.showErrorToast(error.message);
     yield put(loginError(error));
@@ -119,6 +133,7 @@ export function* watchLoginUserChanged() {
     takeEvery(ME_LOGIN_MOBILE, loginMobileUser),
     takeEvery(ME_UPDATE_DETAILS, updateUserDetails),
     takeEvery(ME_DELETE_USER, deleteUser),
+    takeEvery(ME_PASSWORD_VERIFY, verifyUserPassword),
   ]);
   yield;
 }

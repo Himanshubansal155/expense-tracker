@@ -74,3 +74,13 @@ export const deleteUserApi = async () => {
     throw new Error(error.data.message);
   }
 };
+
+export const verifyPasswordApi = async (data) => {
+  try {
+    const url = BASE_URL + "verify-password";
+    const response = await axios.post(url, { password: data });
+    return response;
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
+};

@@ -5,13 +5,18 @@ import ButtonField from "../shared components/Button/Button";
 import Input from "./../shared components/Input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { userStoreSelector } from "../../store/stores.selector";
-import { userDeleteAction, userUpdateAction } from "../../actions/auth.actions";
+import {
+  userDeleteAction,
+  userUpdateAction,
+  userVerifyAction,
+} from "../../actions/auth.actions";
 import toastService from "../../services/toastService";
 import { CircularProgress } from "@mui/material";
 
 const Settings = () => {
   const user = useSelector(userStoreSelector);
   const dispatch = useDispatch();
+  const [verifiedPassword, setVerifiedPassword] = useState("");
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -39,6 +44,13 @@ const Settings = () => {
       }
     }
   };
+  const handleVerifyPassword = () => {
+    try {
+      dispatch(userVerifyAction(verifiedPassword));
+    } catch (error) {
+      toastService.showErrorToast(error);
+    }
+  };
   const SaveButton = (type) => (
     <div className="flex justify-center">
       <ButtonField
@@ -52,82 +64,113 @@ const Settings = () => {
   );
   return (
     <div>
-      <div className="flex flex-col p-10 space-y-5">
-        <SettingsCard title={"Change Username"} subTitle={user.data.name}>
-          <div className="w-full px-5">
-            <Input
-              label="Enter New Username"
-              onChange={handleChange}
-              name="name"
-            />
-            {SaveButton("name")}
-          </div>
-        </SettingsCard>
-        <SettingsCard title={"Change Email"} subTitle={user.data.email}>
-          <div className="w-full px-5">
-            <Input
-              label="Enter New Email"
-              onChange={handleChange}
-              name="email"
-            />
-            {SaveButton("email")}
-          </div>
-        </SettingsCard>
-        <SettingsCard title={"Change Phone Number"} subTitle={user.data.phone}>
-          <div className="w-full px-5">
-            <Input
-              label="Enter New Phone Number"
-              onChange={handleChange}
-              name="phone"
-            />
-            {SaveButton("phone")}
-          </div>
-        </SettingsCard>
-        <SettingsCard title={"Change Password"}>
-          <div className="w-full px-5">
-            <Input
-              type="password"
-              label="New Password"
-              onChange={handleChange}
-              name="password"
-            />
-            <Input
-              label="Confirm Password"
-              onChange={handleChange}
-              name="confirmPassword"
-            />
-            {SaveButton("password")}
-          </div>
-        </SettingsCard>
-        <SettingsCard title={"Delete User"}>
-          <div className="flex justify-between w-full">
-            <div className="flex">
-              <ErrorIcon className="text-yellow-900 mr-2" />
-              <div className="text-yellow-900">
-                Are You Sure want to delete User?
+      {user.isVerified ? (
+        <div className="flex flex-col p-10 space-y-5">
+          <SettingsCard title={"Change Username"} subTitle={user.data.name}>
+            <div className="w-full px-5">
+              <Input
+                label="Enter New Username"
+                onChange={handleChange}
+                name="name"
+              />
+              {SaveButton("name")}
+            </div>
+          </SettingsCard>
+          <SettingsCard title={"Change Email"} subTitle={user.data.email}>
+            <div className="w-full px-5">
+              <Input
+                label="Enter New Email"
+                onChange={handleChange}
+                name="email"
+              />
+              {SaveButton("email")}
+            </div>
+          </SettingsCard>
+          <SettingsCard
+            title={"Change Phone Number"}
+            subTitle={user.data.phone}
+          >
+            <div className="w-full px-5">
+              <Input
+                label="Enter New Phone Number"
+                onChange={handleChange}
+                name="phone"
+              />
+              {SaveButton("phone")}
+            </div>
+          </SettingsCard>
+          <SettingsCard title={"Change Password"}>
+            <div className="w-full px-5">
+              <Input
+                type="password"
+                label="New Password"
+                onChange={handleChange}
+                name="password"
+              />
+              <Input
+                label="Confirm Password"
+                onChange={handleChange}
+                name="confirmPassword"
+              />
+              {SaveButton("password")}
+            </div>
+          </SettingsCard>
+          <SettingsCard title={"Delete User"}>
+            <div className="flex justify-between w-full">
+              <div className="flex">
+                <ErrorIcon className="text-yellow-900 mr-2" />
+                <div className="text-yellow-900">
+                  Are You Sure want to delete User?
+                </div>
+              </div>
+              <div className="flex space-x-4">
+                <ButtonField
+                  buttonstyle={{ backgroundColor: "red", opacity: 0.5 }}
+                  hoverstyle={{ backgroundColor: "red", opacity: 1 }}
+                  onClick={handleDelete}
+                >
+                  Yes
+                  {user.isLoading && (
+                    <CircularProgress size={20} color="inherit" />
+                  )}
+                </ButtonField>
+                <ButtonField
+                  buttonstyle={{ borderColor: "green", color: "green" }}
+                  variant={"outlined"}
+                >
+                  No
+                </ButtonField>
               </div>
             </div>
-            <div className="flex space-x-4">
+          </SettingsCard>
+        </div>
+      ) : (
+        <div className="pt-10 px-5">
+          <div className="w-full text-center">
+            Verify Password To Open Settings
+          </div>
+          <div className="w-full pt-10">
+            <Input
+              type="password"
+              label="Password"
+              onChange={(event) => setVerifiedPassword(event.target.value)}
+              name="password"
+              value={verifiedPassword}
+            />
+            <div className="flex justify-center">
               <ButtonField
-                buttonstyle={{ backgroundColor: "red", opacity: 0.5 }}
-                hoverstyle={{ backgroundColor: "red", opacity: 1 }}
-                onClick={handleDelete}
+                className="bg-darkPrimary mx-auto mt-3 w-80"
+                onClick={handleVerifyPassword}
               >
-                Yes
+                Save
                 {user.isLoading && (
                   <CircularProgress size={20} color="inherit" />
                 )}
               </ButtonField>
-              <ButtonField
-                buttonstyle={{ borderColor: "green", color: "green" }}
-                variant={"outlined"}
-              >
-                No
-              </ButtonField>
             </div>
           </div>
-        </SettingsCard>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
