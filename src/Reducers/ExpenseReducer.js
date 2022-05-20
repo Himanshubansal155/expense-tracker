@@ -31,6 +31,9 @@ export const expenseSlice = createSlice({
     getExpenseById: (state, action) => {
       state.expense = action.payload;
       state.isExpenseLoading = false;
+      state.expenses[
+        state.expenses.findIndex((e) => e.id === action.payload.id)
+      ] = action.payload;
     },
     deleteExpenseFromExpenses: (state, action) => {
       state.expenses.splice(action.payload, 1);

@@ -11,6 +11,9 @@ import {
   SHOW_ALL_EXPENSES,
 } from "../../constants/action.constants";
 import { expenseStoreSelector } from "../../store/stores.selector";
+import DownloadIcon from "@mui/icons-material/Download";
+import axios from "axios";
+import { convert } from "../../apiService/image.api";
 
 const Expenses = () => {
   const [create, setCreate] = useState(false);
@@ -40,6 +43,28 @@ const Expenses = () => {
     dispatch({ type: DELETE_EXPENSE, payload: { id: deleteId } });
     handleClose();
   };
+  async function download(source, fileName) {
+    await axios
+      .get(source, {
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+        responseType: "blob",
+      })
+      .then(async (response) => {
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(response.data);
+        link.download = fileName;
+        link.click();
+      })
+      .catch(console.error);
+  }
+  const handleDownload = (meta) => {
+    download(
+      meta.url,
+      `${Math.floor(Math.random() * 10000000000)}.${meta.type}`
+    );
+  };
   return (
     <div>
       <div className="flex justify-between items-center border-b-2 px-3 pt-4 pb-3">
@@ -61,6 +86,9 @@ const Expenses = () => {
                   <span className="text-2xl">{expense.title}</span>
                   <span>Rs.{expense.amount}</span>
                 </div>
+                <div className="text-sm text-gray-400">
+                  {expense.description}
+                </div>
                 <div className="flex justify-between space-x-3 items-center">
                   <div className="flex space-x-2 mt-2">
                     <div
@@ -71,6 +99,12 @@ const Expenses = () => {
                     </div>
                   </div>
                   <div className="flex space-x-3 text-darkPrimary py-1">
+                    {expense.meta && (
+                      <DownloadIcon
+                        className="cursor-pointer"
+                        onClick={() => handleDownload(expense?.meta)}
+                      />
+                    )}
                     <EditIcon
                       className="cursor-pointer"
                       onClick={() => setEditExpense(expense)}
