@@ -92,6 +92,7 @@ export function* updateUserDetails(action) {
     yield put(loading());
     const response = yield call(editUserApi, action.payload.data);
     yield put(updateCompleted(response));
+    toastService.showtoast("Data Updated Successfully");
   } catch (error) {
     toastService.showErrorToast(error.message);
     yield put(loginError(error));

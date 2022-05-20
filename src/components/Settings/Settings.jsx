@@ -18,10 +18,10 @@ const Settings = () => {
   const dispatch = useDispatch();
   const [verifiedPassword, setVerifiedPassword] = useState("");
   const [form, setForm] = useState({
-    email: "",
+    email: user.data.email || "",
     password: "",
-    phone: "",
-    name: "",
+    phone: user.data.phone || "",
+    name: user.data.name || "",
     confirmPassword: "",
   });
   const handleChange = (event) => {
@@ -51,14 +51,16 @@ const Settings = () => {
       toastService.showErrorToast(error);
     }
   };
-  const SaveButton = (type) => (
+  const SaveButton = (type, title = "Save") => (
     <div className="flex justify-center">
       <ButtonField
         className="bg-darkPrimary mx-auto mt-3 w-80"
         onClick={() => handleSubmit(type)}
       >
-        Save
-        {user.isLoading && <CircularProgress size={20} color="inherit" />}
+        {title}
+        {user.isLoading && (
+          <CircularProgress size={20} color="inherit" className="ml-2" />
+        )}
       </ButtonField>
     </div>
   );
@@ -72,6 +74,7 @@ const Settings = () => {
                 label="Enter New Username"
                 onChange={handleChange}
                 name="name"
+                value={form.name}
               />
               {SaveButton("name")}
             </div>
@@ -82,21 +85,9 @@ const Settings = () => {
                 label="Enter New Email"
                 onChange={handleChange}
                 name="email"
+                value={form.email}
               />
               {SaveButton("email")}
-            </div>
-          </SettingsCard>
-          <SettingsCard
-            title={"Change Phone Number"}
-            subTitle={user.data.phone}
-          >
-            <div className="w-full px-5">
-              <Input
-                label="Enter New Phone Number"
-                onChange={handleChange}
-                name="phone"
-              />
-              {SaveButton("phone")}
             </div>
           </SettingsCard>
           <SettingsCard title={"Change Password"}>
@@ -133,12 +124,6 @@ const Settings = () => {
                   {user.isLoading && (
                     <CircularProgress size={20} color="inherit" />
                   )}
-                </ButtonField>
-                <ButtonField
-                  buttonstyle={{ borderColor: "green", color: "green" }}
-                  variant={"outlined"}
-                >
-                  No
                 </ButtonField>
               </div>
             </div>
