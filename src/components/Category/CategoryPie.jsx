@@ -5,18 +5,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { VictoryLabel, VictoryPie, VictoryTheme } from "victory";
 import { SHOW_ALL_RECIEPT_EXPENSES } from "../../constants/action.constants";
-import { reportStoreSelector } from "../../store/stores.selector";
+import { categoryStoreSelector } from "../../store/stores.selector";
 import ButtonField from "../shared components/Button/Button";
 import { map, uniqBy } from "lodash";
+import Loader from "../shared components/Loader/Loader";
+import Empty from "../shared components/Empty/Empty";
 
 const CategoryPie = () => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add(1, "month"));
-  const reportStore = useSelector(reportStoreSelector);
+  const categoryStore = useSelector(categoryStoreSelector);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!reportStore.isRecieptExpensesLoaded) handleRecieptChange();
-  }, []);
+    if (!categoryStore.isCategoriesPieLoaded) handleRecieptChange();
+  }, [categoryStore.isCategoriesPieLoaded]);
   const handleRecieptChange = () => {
     if (startDate && endDate) {
       const start = moment(startDate);
@@ -32,7 +34,7 @@ const CategoryPie = () => {
       });
     }
   };
-  const expenses = reportStore.recieptExpenses;
+  const expenses = categoryStore.categoriesPie;
   const amountList = [];
   const categoriesList = uniqBy(map(expenses, "category"), "id");
   const dataList = categoriesList.map((category, index) => {
@@ -45,7 +47,6 @@ const CategoryPie = () => {
     });
     return { x: category.title, y: amountList[index], id: category.id };
   });
-  console.log(dataList);
   return (
     <div style={{ width: 550, margin: "auto" }} className="p-10">
       <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
@@ -69,38 +70,46 @@ const CategoryPie = () => {
       <ButtonField className="mt-5" onClick={handleRecieptChange}>
         Create
       </ButtonField>
-      <svg viewBox="0 0 320 320">
-        <VictoryPie
-          standalone={false}
-          data={dataList}
-          innerRadius={50}
-          theme={VictoryTheme.material}
-          labelRadius={({ innerRadius }) => innerRadius + 14}
-          labelComponent={
-            <VictoryLabel
-              angle={0}
-              style={[
-                {
-                  fontSize: "11px",
-                  fill: "#0f0f0f",
-                },
-                {
-                  fontSize: "10px",
-                  fill: "#013157",
-                },
-              ]}
-              text={({ datum }) => `${datum.x}\n $${datum.y}`}
+      {dataList.length === 0 && (
+        <Empty title={"No Categories Found for selected Dates"} />
+      )}
+      {dataList.length > 0 &&
+        (categoryStore.isCategoryPieLoading ? (
+          <Loader />
+        ) : (
+          <svg viewBox="0 0 320 320">
+            <VictoryPie
+              standalone={false}
+              data={dataList}
+              innerRadius={50}
+              theme={VictoryTheme.material}
+              labelRadius={({ innerRadius }) => innerRadius + 14}
+              labelComponent={
+                <VictoryLabel
+                  angle={0}
+                  style={[
+                    {
+                      fontSize: "11px",
+                      fill: "#0f0f0f",
+                    },
+                    {
+                      fontSize: "10px",
+                      fill: "#013157",
+                    },
+                  ]}
+                  text={({ datum }) => `${datum.x}\n $${datum.y}`}
+                />
+              }
             />
-          }
-        />
-        <VictoryLabel
-          textAnchor="middle"
-          style={{ fontSize: 14, fill: "#8b8b8b" }}
-          x={175}
-          y={170}
-          text={`Spent \nper category`}
-        />
-      </svg>
+            <VictoryLabel
+              textAnchor="middle"
+              style={{ fontSize: 14, fill: "#8b8b8b" }}
+              x={175}
+              y={170}
+              text={`Spent \nper category`}
+            />
+          </svg>
+        ))}
     </div>
   );
 };

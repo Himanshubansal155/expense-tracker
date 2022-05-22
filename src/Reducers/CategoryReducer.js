@@ -4,6 +4,10 @@ import { sortArray } from "../Utils";
 const initialState = {
   categories: [],
   isLoading: false,
+  isCategoryPieLoading: false,
+  categoriesPie: [],
+  categoriesError: undefined,
+  isCategoriesPieLoaded: false,
   error: undefined,
   filterParams: {},
   isCategoriesLoaded: false,
@@ -19,10 +23,19 @@ export const categorySlice = createSlice({
       state.isLoading = true;
       state.error = undefined;
     },
+    pieLoading: (state) => {
+      state.isCategoryPieLoading = true;
+      state.categoriesError = undefined;
+    },
     indexCategories: (state, action) => {
       state.categories = action.payload;
       state.isLoading = false;
       state.isCategoriesLoaded = true;
+    },
+    indexPieCategories: (state, action) => {
+      state.categoriesPie = action.payload;
+      state.isCategoryPieLoading = false;
+      state.isCategoriesPieLoaded = true;
     },
     indexSubCategories: (state, action) => {
       state.subCategories = action.payload;
@@ -41,24 +54,32 @@ export const categorySlice = createSlice({
         1
       );
       state.isLoading = false;
+      state.isCategoriesPieLoaded = false;
     },
     addCategory: (state, action) => {
       state.categories.push(action.payload);
       state.categories = sortArray(state.categories);
       state.isLoading = false;
+      state.isCategoriesPieLoaded = false;
     },
     addSubCategory: (state, action) => {
       state.subCategories.push(action.payload);
       state.subCategories = sortArray(state.subCategories);
       state.isLoading = false;
+      state.isCategoriesPieLoaded = false;
     },
     error: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     },
+    pieError: (state, action) => {
+      state.pieError = action.payload;
+      state.isCategoryPieLoading = false;
+    },
     resetCategoryItems: (state, action) => {
       state.isCategoriesLoaded = false;
       state.isSubCategoriesLoaded = false;
+      state.isCategoriesPieLoaded = false;
     },
   },
 });
@@ -73,6 +94,9 @@ export const {
   addSubCategory,
   indexSubCategories,
   resetCategoryItems,
+  pieLoading,
+  indexPieCategories,
+  pieError,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;
