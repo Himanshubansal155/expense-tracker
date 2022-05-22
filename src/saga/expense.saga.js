@@ -12,6 +12,7 @@ import {
   SHOW_ALL_EXPENSES,
   UPDATE_EXPENSE,
 } from "../constants/action.constants";
+import { resetCategoryItems } from "../Reducers/CategoryReducer";
 import {
   indexExpenses,
   loading,
@@ -26,7 +27,7 @@ import toastService from "../services/toastService";
 export function* indexAllExpenses(action) {
   try {
     yield put(loading());
-    const response = yield call(showAllExpensesApi, action.payload.filters);
+    const response = yield call(showAllExpensesApi, action.payload?.filters);
     yield put(indexExpenses(response));
   } catch (err) {
     toastService.showErrorToast(err.message);
@@ -47,6 +48,7 @@ export function* getExpense(action) {
 export function* updateExpense(action) {
   try {
     yield put(isExpenseLoading());
+    yield put(resetCategoryItems());
     const response = yield call(
       editExpenseApi,
       action.payload.id,
@@ -64,6 +66,7 @@ export function* updateExpense(action) {
 export function* deleteUserExpense(action) {
   try {
     yield put(loading());
+    yield put(resetCategoryItems());
     yield call(deleteExpenseApi, action.payload.id);
     yield put(deleteExpenseFromExpenses(action.payload.index));
     toastService.showtoast("Expense Deleted Successfully");
@@ -76,6 +79,7 @@ export function* deleteUserExpense(action) {
 export function* addUserExpense(action) {
   try {
     yield put(isExpenseLoading());
+    yield put(resetCategoryItems());
     const response = yield call(addExpenseApi, action.payload.data);
     toastService.showtoast("Expense Created Successfully");
     action.payload.onClose();

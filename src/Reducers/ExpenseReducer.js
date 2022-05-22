@@ -8,6 +8,7 @@ const initialState = {
   isExpenseLoading: false,
   error: undefined,
   filterParams: {},
+  isExpensesLoaded: false,
 };
 
 export const expenseSlice = createSlice({
@@ -25,10 +26,14 @@ export const expenseSlice = createSlice({
     indexExpenses: (state, action) => {
       state.expenses = action.payload;
       state.isLoading = false;
+      state.isExpensesLoaded = true;
     },
     getExpenseById: (state, action) => {
       state.expense = action.payload;
       state.isExpenseLoading = false;
+      state.expenses[
+        state.expenses.findIndex((e) => e.id === action.payload.id)
+      ] = action.payload;
     },
     deleteExpenseFromExpenses: (state, action) => {
       state.expenses.splice(action.payload, 1);

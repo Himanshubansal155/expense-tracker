@@ -1,11 +1,23 @@
 import { call, put, takeEvery, all } from "redux-saga/effects";
-import { login, logout, me, signup, loginMobile } from "../apiService/Auth.api";
 import {
+  login,
+  logout,
+  me,
+  signup,
+  loginMobile,
+  editUserApi,
+  deleteUserApi,
+  verifyPasswordApi,
+} from "../apiService/Auth.api";
+import {
+  ME_DELETE_USER,
   ME_FETCH,
   ME_LOGIN,
   ME_LOGIN_MOBILE,
   ME_LOGOUT,
+  ME_PASSWORD_VERIFY,
   ME_SIGNUP,
+  ME_UPDATE_DETAILS,
 } from "../constants/action.constants";
 import {
   fetchCompleted,
@@ -13,6 +25,8 @@ import {
   loginError,
   logoutUser,
   loading,
+  updateCompleted,
+  verified,
 } from "../Reducers/AuthReducer";
 import toastService from "../services/toastService";
 
@@ -73,6 +87,43 @@ export function* loggedOut() {
     yield put(loginError(error));
   }
 }
+export function* updateUserDetails(action) {
+  try {
+    yield put(loading());
+    const response = yield call(editUserApi, action.payload.data);
+    yield put(updateCompleted(response));
+    toastService.showtoast("Data Updated Successfully");
+  } catch (error) {
+    toastService.showErrorToast(error.message);
+    yield put(loginError(error));
+  }
+}
+
+export function* deleteUser() {
+  try {
+    yield put(loading());
+    const response = yield call(deleteUserApi);
+    if (!!response) {
+      yield call(logout);
+      yield put(logoutUser());
+    }
+  } catch (error) {
+    toastService.showErrorToast(error.message);
+    yield put(loginError(error));
+  }
+}
+export function* verifyUserPassword(action) {
+  try {
+    yield put(loading());
+    const response = yield call(verifyPasswordApi, action.payload.data);
+    if (!!response) {
+      yield put(verified());
+    }
+  } catch (error) {
+    toastService.showErrorToast(error.message);
+    yield put(loginError(error));
+  }
+}
 
 export function* watchLoginUserChanged() {
   yield all([
@@ -81,6 +132,9 @@ export function* watchLoginUserChanged() {
     takeEvery(ME_LOGOUT, loggedOut),
     takeEvery(ME_SIGNUP, signupUser),
     takeEvery(ME_LOGIN_MOBILE, loginMobileUser),
+    takeEvery(ME_UPDATE_DETAILS, updateUserDetails),
+    takeEvery(ME_DELETE_USER, deleteUser),
+    takeEvery(ME_PASSWORD_VERIFY, verifyUserPassword),
   ]);
   yield;
 }

@@ -1,7 +1,7 @@
 import { BASE_URL } from "../constants/secrets";
 import { post } from "./base.api";
 
-const convert = (event) => {
+export const convert = (event) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = reject;

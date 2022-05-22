@@ -24,6 +24,7 @@ import { BallTriangle } from "react-loader-spinner";
 import { COLORS } from "../../../constants/Colors";
 import toastService from "../../../services/toastService";
 import * as Yup from "yup";
+import moment from "moment";
 
 const loginSchema = Yup.object({
   title: Yup.string().required("Title is Required"),
@@ -50,10 +51,12 @@ const CreateExpense = ({ create, handleClose, expense }) => {
       title: expense?.title || "",
       description: expense?.description || "",
       amount: expense?.amount || undefined,
-      date: expense?.date || "",
-      time: expense?.time || undefined,
-      categoryId: expense?.categoryId || "",
-      subCategoryId: expense?.subCategoryId || "",
+      date: (expense?.date && moment(expense?.date).format("yyyy-MM-DD")) || "",
+      time:
+        (expense?.date && moment(expense?.date).format("hh:mm:ss")) ||
+        undefined,
+      categoryId: expense?.category?.id || "",
+      subCategoryId: expense?.subCategory?.id || undefined,
       meta: expense?.meta || undefined,
     },
     validationSchema: loginSchema,

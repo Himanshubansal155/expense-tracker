@@ -56,6 +56,10 @@ export const categorySlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    resetCategoryItems: (state, action) => {
+      state.isCategoriesLoaded = false;
+      state.isSubCategoriesLoaded = false;
+    },
   },
 });
 
@@ -68,6 +72,7 @@ export const {
   getCategoryById,
   addSubCategory,
   indexSubCategories,
+  resetCategoryItems,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

@@ -5,6 +5,7 @@ const initialState = {
   data: undefined,
   loginStatus: LOGGED_OUT,
   isLoading: false,
+  isVerified: false,
 };
 
 export const authSlice = createSlice({
@@ -17,6 +18,12 @@ export const authSlice = createSlice({
     fetchCompleted: (state, action) => {
       const user = action.payload;
       state.loginStatus = LOGGED_IN;
+      state.isLoading = false;
+      state.data = user;
+      state.error = undefined;
+    },
+    updateCompleted: (state, action) => {
+      const user = action.payload;
       state.isLoading = false;
       state.data = user;
       state.error = undefined;
@@ -38,6 +45,12 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.loginStatus = LOGGED_OUT;
       state.error = undefined;
+      state.isVerified = false;
+    },
+    verified: (state) => {
+      state.isVerified = true;
+      state.isLoading = false;
+      state.error = undefined;
     },
   },
 });
@@ -48,6 +61,8 @@ export const {
   fetchCompleted,
   logoutUser,
   loading,
+  updateCompleted,
+  verified,
 } = authSlice.actions;
 
 export default authSlice.reducer;

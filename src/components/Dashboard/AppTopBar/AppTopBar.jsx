@@ -88,6 +88,7 @@ const AppTopBar = ({ drawerWidth, pathname, handleDrawerOpen }) => {
             placeholder="Search Expense"
             autoComplete="off"
             onChange={(event) => setSearchText(event.target.value)}
+            value={searchText}
             className="rounded-lg p-1 bg-transparent focus:outline-none text-gray-500 placeholder-gray-500"
           />
           <SearchIcon
