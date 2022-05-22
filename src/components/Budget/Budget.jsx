@@ -42,7 +42,6 @@ const Budget = () => {
   };
   const handleYearChange = () => {
     if (year) {
-      console.log("hbs");
       dispatch({
         type: SHOW_ALL_YEARLY_EXPENSES,
         payload: {

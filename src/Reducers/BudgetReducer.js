@@ -59,6 +59,11 @@ export const budgetSlice = createSlice({
       state.yearlyError = action.payload;
       state.isYearlyLoading = false;
     },
+    resetReports: (state) => {
+      state.isMonthlyExpensesLoaded = false;
+      state.isYearlyExpensesLoaded = false;
+      state.isRecieptExpensesLoaded = false;
+    },
   },
 });
 
@@ -72,6 +77,7 @@ export const {
   recieptError,
   recieptLoading,
   indexRecieptExpenses,
+  resetReports,
 } = budgetSlice.actions;
 
 export default budgetSlice.reducer;

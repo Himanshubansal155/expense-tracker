@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   SHOW_ALL_EXPENSES,
   SHOW_ALL_RECIEPT_EXPENSES,
+  SHOW_ALL_YEARLY_EXPENSES,
 } from "../../constants/action.constants";
 import {
   expenseStoreSelector,
@@ -24,6 +25,8 @@ const Dashboard = () => {
   const reportStore = useSelector(reportStoreSelector);
   const expenseStore = useSelector(expenseStoreSelector);
   const [searchText, setSearchText] = useState(expenseStore.searchText);
+  const yearlyList = reportStore?.yearlyExpenses;
+  const thisMonth = moment().month();
   useEffect(() => {
     if (!reportStore.isRecieptExpensesLoaded) handleRecieptChange();
   }, []);
@@ -33,6 +36,14 @@ const Dashboard = () => {
     if (searchText !== expenseStore.searchText)
       setSearchText(expenseStore.searchText);
   }, [expenseStore.searchText]);
+  useEffect(() => {
+    dispatch({
+      type: SHOW_ALL_YEARLY_EXPENSES,
+      payload: {
+        year: moment().year(),
+      },
+    });
+  }, []);
 
   const searchExpense = () => {
     navigate(ROUTES.EXPENSES);
@@ -79,11 +90,52 @@ const Dashboard = () => {
           onClick={searchExpense}
         />
       </div>
+      <div className="border border-gray-100 p-10 shadow-xl w-10/12 md:w-8/12 mx-auto mt-3">
+        <div className="text-center text-4xl text-darkPrimary">
+          You've spent
+        </div>
+        <div className="flex justify-center flex-col md:flex-row items-center">
+          <div className="rounded-full w-48 lg:w-72 h-48 lg:h-72 shadow-2xl bg-darkPrimary">
+            <div className="rounded-full w-full h-full border-8 border-primary p-10 flex flex-col justify-center items-center">
+              {reportStore.isYearlyLoading ? (
+                <Loader />
+              ) : (
+                <>
+                  <div className="text-xl lg:text-3xl text-white mb-5">
+                    Rs.
+                    {yearlyList?.monthlyExpenses?.length > 0 &&
+                      yearlyList?.monthlyExpenses[thisMonth]}
+                  </div>
+                  <div className="text-lg md:text-xl text-gray-200">
+                    This month
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="flex flex-col justify-center items-center w-48 sm:w-60 md:ml-10 mt-10">
+            <div className="px-1 p-2 border-4 border-primary italic rounded-lg w-full text-center text-primary">
+              Rs. 2000000 today
+            </div>
+            <div className="px-1 p-2 border-4 border-primary italic rounded-lg w-full mt-2 text-center text-primary">
+              Rs. 2000000 Yesterday
+            </div>
+            <div className="w-full text-left text-primary">
+              <span
+                className="cursor-pointer"
+                onClick={() => navigate(ROUTES.EXPENSES)}
+              >
+                See more
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="my-10">
         <div className="text-3xl text-primary text-center p-10">
           Create Reports
         </div>
-        <div className="flex justify-center items-center space-x-4">
+        <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
           <DatePicker
             label="Start Date"
             value={startDate}

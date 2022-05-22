@@ -15,6 +15,8 @@ import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Delete from "../shared components/Delete/Delete";
+import { VictoryLabel, VictoryPie, VictoryTheme } from "victory";
+import CategoryPie from "./CategoryPie";
 
 const Category = () => {
   const [type, setType] = useState(1);
@@ -42,6 +44,7 @@ const Category = () => {
     } else {
     }
   }, [type]);
+
   useEffect(() => {
     if (categoryId) {
       dispatch({ type: SHOW_ALL_SUB_CATEGORIES, payload: { id: categoryId } });
@@ -158,7 +161,9 @@ const Category = () => {
               </div>
             )}
           </div>
-          <div></div>
+          <div>
+            <CategoryPie />
+          </div>
         </div>
       )}
       <CreateCategory create={create} handleClose={() => setCreate(false)} />

@@ -12,6 +12,7 @@ import {
   SHOW_ALL_EXPENSES,
   UPDATE_EXPENSE,
 } from "../constants/action.constants";
+import { resetReports } from "../Reducers/BudgetReducer";
 import { resetCategoryItems } from "../Reducers/CategoryReducer";
 import {
   indexExpenses,
@@ -51,6 +52,7 @@ export function* updateExpense(action) {
   try {
     yield put(isExpenseLoading());
     yield put(resetCategoryItems());
+    yield put(resetReports());
     const response = yield call(
       editExpenseApi,
       action.payload.id,
@@ -69,6 +71,7 @@ export function* deleteUserExpense(action) {
   try {
     yield put(loading());
     yield put(resetCategoryItems());
+    yield put(resetReports());
     yield call(deleteExpenseApi, action.payload.id);
     yield put(deleteExpenseFromExpenses(action.payload.index));
     toastService.showtoast("Expense Deleted Successfully");
@@ -82,6 +85,7 @@ export function* addUserExpense(action) {
   try {
     yield put(isExpenseLoading());
     yield put(resetCategoryItems());
+    yield put(resetReports());
     const response = yield call(addExpenseApi, action.payload.data);
     toastService.showtoast("Expense Created Successfully");
     action.payload.onClose();
