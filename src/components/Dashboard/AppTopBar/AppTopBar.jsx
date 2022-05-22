@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,7 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ROUTES } from "../../../constants/Routes";
 import {
   ME_LOGOUT,
@@ -17,13 +17,18 @@ import {
 } from "../../../constants/action.constants";
 import PopOver from "../../shared components/PopOver/PopOver";
 import PersonIcon from "@mui/icons-material/Person";
-import DeleteIcon from "@mui/icons-material/Delete";
 import LogoutIcon from "@mui/icons-material/PowerSettingsNew";
+import { expenseStoreSelector } from "../../../store/stores.selector";
 
 const AppTopBar = ({ drawerWidth, pathname, handleDrawerOpen }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchText, setSearchText] = useState("");
+  const expenseStore = useSelector(expenseStoreSelector);
+  const [searchText, setSearchText] = useState(expenseStore.searchText);
+  useEffect(() => {
+    if (searchText !== expenseStore.searchText)
+      setSearchText(expenseStore.searchText);
+  }, [expenseStore.searchText]);
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({

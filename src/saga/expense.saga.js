@@ -21,12 +21,14 @@ import {
   deleteExpenseFromExpenses,
   addExpense,
   isExpenseLoading,
+  setSearchText,
 } from "../Reducers/ExpenseReducer";
 import toastService from "../services/toastService";
 
 export function* indexAllExpenses(action) {
   try {
     yield put(loading());
+    yield put(setSearchText(action.payload?.filters?.title));
     const response = yield call(showAllExpensesApi, action.payload?.filters);
     yield put(indexExpenses(response));
   } catch (err) {

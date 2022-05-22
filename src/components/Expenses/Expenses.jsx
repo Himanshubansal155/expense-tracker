@@ -24,7 +24,7 @@ const Expenses = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const expenses = useSelector(expenseStoreSelector);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(expenses.searchText);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -39,6 +39,9 @@ const Expenses = () => {
       },
     });
   };
+  useEffect(() => {
+    if (searchText !== expenses.searchText) setSearchText(expenses.searchText);
+  }, [expenses.searchText]);
 
   useEffect(() => {
     if (!expenses.isExpensesLoaded) {

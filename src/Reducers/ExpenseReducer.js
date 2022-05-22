@@ -9,6 +9,7 @@ const initialState = {
   error: undefined,
   filterParams: {},
   isExpensesLoaded: false,
+  searchText: "",
 };
 
 export const expenseSlice = createSlice({
@@ -22,6 +23,9 @@ export const expenseSlice = createSlice({
     isExpenseLoading: (state) => {
       state.isExpenseLoading = true;
       state.error = undefined;
+    },
+    setSearchText: (state, action) => {
+      state.searchText = action.payload;
     },
     indexExpenses: (state, action) => {
       state.expenses = action.payload;
@@ -61,6 +65,7 @@ export const {
   deleteExpenseFromExpenses,
   addExpense,
   isExpenseLoading,
+  setSearchText,
 } = expenseSlice.actions;
 
 export default expenseSlice.reducer;

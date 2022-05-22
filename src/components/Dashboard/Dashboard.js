@@ -7,7 +7,10 @@ import {
   SHOW_ALL_EXPENSES,
   SHOW_ALL_RECIEPT_EXPENSES,
 } from "../../constants/action.constants";
-import { reportStoreSelector } from "../../store/stores.selector";
+import {
+  expenseStoreSelector,
+  reportStoreSelector,
+} from "../../store/stores.selector";
 import ButtonField from "../shared components/Button/Button";
 import Loader from "../shared components/Loader/Loader";
 import PDFDocument from "../shared components/PDFDocument/PDFDocument";
@@ -18,13 +21,18 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add(1, "month"));
-  const [searchText, setSearchText] = useState("");
   const reportStore = useSelector(reportStoreSelector);
+  const expenseStore = useSelector(expenseStoreSelector);
+  const [searchText, setSearchText] = useState(expenseStore.searchText);
   useEffect(() => {
     if (!reportStore.isRecieptExpensesLoaded) handleRecieptChange();
   }, []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (searchText !== expenseStore.searchText)
+      setSearchText(expenseStore.searchText);
+  }, [expenseStore.searchText]);
 
   const searchExpense = () => {
     navigate(ROUTES.EXPENSES);
