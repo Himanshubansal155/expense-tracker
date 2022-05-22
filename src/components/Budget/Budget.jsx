@@ -16,7 +16,7 @@ import YearlyBar from "./YearlyBar/YearlyBar";
 
 const Budget = () => {
   const dispatch = useDispatch();
-  const reports = useSelector(reportStoreSelector);
+  const reportStore = useSelector(reportStoreSelector);
   const [month, setMonth] = useState(moment().format("YYYY-MM"));
   const [year, setYear] = useState(moment());
 
@@ -51,11 +51,11 @@ const Budget = () => {
       });
     }
   };
-  const expensesList = reports.monthlyExpenses;
-  const yearlyList = reports.yearlyExpenses;
+  const expensesList = reportStore.monthlyExpenses;
+  const yearlyList = reportStore.yearlyExpenses;
   return (
     <div className="min-h-screen mt-10">
-      {reports.isMonthlyLoading ? (
+      {reportStore.isMonthlyLoading ? (
         <div className="my-10">
           <Loader />
         </div>
@@ -83,7 +83,7 @@ const Budget = () => {
         </>
       )}
 
-      {reports.isYearlyLoading ? (
+      {reportStore.isYearlyLoading ? (
         <Loader />
       ) : (
         <>
