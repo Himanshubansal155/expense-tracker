@@ -32,3 +32,4 @@ export const SEARCH_SUB_CATEGORY = "searchSubCategory";
 
 export const SHOW_ALL_MONTHLY_EXPENSES = "showAllMonthly";
 export const SHOW_ALL_YEARLY_EXPENSES = "showAllYearly";
+export const SHOW_ALL_RECIEPT_EXPENSES = "showAllReciept";

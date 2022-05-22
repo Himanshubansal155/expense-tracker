@@ -4,12 +4,16 @@ const initialState = {
   monthlyExpenses: [],
   yearlyExpenses: [],
   isMonthlyLoading: false,
+  recieptExpenses: [],
+  isRecieptLoading: false,
   isYearlyLoading: false,
   monthlyError: undefined,
+  recieptError: undefined,
   yearlyError: undefined,
   filterParams: {},
   isMonthlyExpensesLoaded: false,
   isYearlyExpensesLoaded: false,
+  isRecieptExpensesLoaded: false,
 };
 
 export const budgetSlice = createSlice({
@@ -24,14 +28,27 @@ export const budgetSlice = createSlice({
       state.isYearlyLoading = true;
       state.yearlyError = undefined;
     },
+    recieptLoading: (state) => {
+      state.isRecieptLoading = true;
+      state.recieptError = undefined;
+    },
     indexMonthlyExpenses: (state, action) => {
       state.monthlyExpenses = action.payload;
       state.isMonthlyLoading = false;
       state.isMonthlyExpensesLoaded = true;
     },
+    indexRecieptExpenses: (state, action) => {
+      state.recieptExpenses = action.payload;
+      state.isRecieptLoading = false;
+      state.isRecieptExpensesLoaded = true;
+    },
     monthlyError: (state, action) => {
       state.monthlyError = action.payload;
       state.isMonthlyLoading = false;
+    },
+    recieptError: (state, action) => {
+      state.recieptError = action.payload;
+      state.isRecieptLoading = false;
     },
     indexYearlyExpenses: (state, action) => {
       state.yearlyExpenses = action.payload;
@@ -52,6 +69,9 @@ export const {
   monthlyError,
   indexYearlyExpenses,
   yearlyError,
+  recieptError,
+  recieptLoading,
+  indexRecieptExpenses,
 } = budgetSlice.actions;
 
 export default budgetSlice.reducer;

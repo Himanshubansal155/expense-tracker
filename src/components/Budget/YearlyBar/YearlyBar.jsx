@@ -1,7 +1,16 @@
 import React from "react";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme, VictoryTooltip } from "victory";
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryTooltip,
+} from "victory";
 
-const YearlyBar = () => {
+const YearlyBar = ({ expensesList }) => {
+  const newData = expensesList.map((expense, index) => {
+    return { x: index + 1, y: expense, id: index };
+  });
   const monthStrings = [
     "Jan",
     "Feb",
@@ -38,11 +47,7 @@ const YearlyBar = () => {
             flyoutStyle={{ backgroundColor: "red" }}
           />
         }
-        data={[
-          { x: 5, y: 10000, id: 17 },
-          { x: 1, y: 10000, id: 17 },
-          { x: 2, y: 10000, id: 17 },
-        ]}
+        data={newData}
         x={monthStrings["x"]}
         domain={{ x: [0, 13] }}
         labels={({ datum }) => `Rs.${datum.y}`}

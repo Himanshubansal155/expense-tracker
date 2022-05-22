@@ -3,7 +3,10 @@ import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SHOW_ALL_MONTHLY_EXPENSES } from "../../constants/action.constants";
+import {
+  SHOW_ALL_MONTHLY_EXPENSES,
+  SHOW_ALL_YEARLY_EXPENSES,
+} from "../../constants/action.constants";
 import { reportStoreSelector } from "../../store/stores.selector";
 import Empty from "../shared components/Empty/Empty";
 import Input from "../shared components/Input/Input";
@@ -15,13 +18,14 @@ const Budget = () => {
   const dispatch = useDispatch();
   const reports = useSelector(reportStoreSelector);
   const [month, setMonth] = useState(moment().format("YYYY-MM"));
-  const [year, setYear] = useState(moment().format("YYYY"));
-
-  console.log(year);
+  const [year, setYear] = useState(moment());
 
   useEffect(() => {
     handleMonthChange();
   }, [month]);
+  useEffect(() => {
+    handleYearChange();
+  }, [year]);
   const handleMonthChange = () => {
     if (month) {
       const date = moment(month);
@@ -36,11 +40,25 @@ const Budget = () => {
       });
     }
   };
+  const handleYearChange = () => {
+    if (year) {
+      console.log("hbs");
+      dispatch({
+        type: SHOW_ALL_YEARLY_EXPENSES,
+        payload: {
+          year: moment(year).year(),
+        },
+      });
+    }
+  };
   const expensesList = reports.monthlyExpenses;
+  const yearlyList = reports.yearlyExpenses;
   return (
     <div className="min-h-screen mt-10">
       {reports.isMonthlyLoading ? (
-        <Loader />
+        <div className="my-10">
+          <Loader />
+        </div>
       ) : (
         <>
           <div className="flex justify-center w-1/2 mx-auto space-x-5 items-center">
@@ -54,7 +72,7 @@ const Budget = () => {
             />
           </div>
           {expensesList.length > 0 && !!month ? (
-            <div className=" height">
+            <div className="height">
               <div className="w-5/6 h-4/6 mx-auto ">
                 <VictoryMonthlyChart expenses={expensesList} />
               </div>
@@ -65,23 +83,35 @@ const Budget = () => {
         </>
       )}
 
-      <div className="flex justify-center w-1/2 mx-auto space-x-5 items-center">
-        <span>Your monthly expenditures in</span>
-        <DatePicker
-          views={["year"]}
-          label="Year only"
-          value={year}
-          onChange={(newValue) => {
-            setYear(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} helperText={null} />}
-        />
-      </div>
-      <div className="h-screen">
-        <div className="w-5/6 h-4/6 mx-auto ">
-          <YearlyBar />
-        </div>
-      </div>
+      {reports.isYearlyLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="flex justify-center w-1/2 mx-auto space-x-5 items-center">
+            <span>Your monthly expenditures in</span>
+            <DatePicker
+              views={["year"]}
+              label="Year only"
+              value={year}
+              onChange={(newValue) => {
+                setYear(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} helperText={null} />
+              )}
+            />
+          </div>
+          {yearlyList?.monthlyExpenses?.length > 0 && !!year ? (
+            <div className="h-screen">
+              <div className="w-5/6 h-4/6 mx-auto ">
+                <YearlyBar expensesList={yearlyList.monthlyExpenses} />
+              </div>
+            </div>
+          ) : (
+            <Empty title={"No Expenses Found"} />
+          )}
+        </>
+      )}
     </div>
   );
 };

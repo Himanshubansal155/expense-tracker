@@ -51,3 +51,13 @@ export const showAllExpensesApi = async (filters) => {
     throw new Error(error.data.message);
   }
 };
+
+export const showYearlyExpenses = async (year) => {
+  try {
+    const url = BASE_URL + `show-budget/${year}`;
+    const response = await get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.data.message);
+  }
+};
