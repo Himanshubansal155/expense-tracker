@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,7 +23,7 @@ import LogoutIcon from "@mui/icons-material/PowerSettingsNew";
 const AppTopBar = ({ drawerWidth, pathname, handleDrawerOpen }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchText, setSearchText] = React.useState("");
+  const [searchText, setSearchText] = useState("");
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
@@ -80,7 +80,7 @@ const AppTopBar = ({ drawerWidth, pathname, handleDrawerOpen }) => {
             {pathname}
           </Typography>
         </div>
-        <div className="bg-gray-300 rounded-2xl px-2 p-1 text-gray-500">
+        <div className="bg-gray-300 rounded-2xl px-2 p-1 text-gray-500 hidden md:inline-block">
           <input
             type="search"
             name="search"

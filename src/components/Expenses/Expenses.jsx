@@ -13,7 +13,10 @@ import {
 import { expenseStoreSelector } from "../../store/stores.selector";
 import DownloadIcon from "@mui/icons-material/Download";
 import axios from "axios";
-import { convert } from "../../apiService/image.api";
+import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/Routes";
+import Empty from "./../shared components/Empty/Empty";
 
 const Expenses = () => {
   const [create, setCreate] = useState(false);
@@ -21,7 +24,21 @@ const Expenses = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const expenses = useSelector(expenseStoreSelector);
+  const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const searchExpense = () => {
+    navigate(ROUTES.EXPENSES);
+    dispatch({
+      type: SHOW_ALL_EXPENSES,
+      payload: {
+        filters: {
+          title: searchText,
+        },
+      },
+    });
+  };
 
   useEffect(() => {
     if (!expenses.isExpensesLoaded) {
@@ -74,9 +91,26 @@ const Expenses = () => {
           onClick={() => setCreate(true)}
         />
       </div>
+      <div className="bg-gray-300 rounded-2xl px-2 p-1 text-gray-500 items-center mt-5 flex justify-between mx-5">
+        <input
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Search Expense"
+          autoComplete="off"
+          onChange={(event) => setSearchText(event.target.value)}
+          value={searchText}
+          className="rounded-lg p-1 bg-transparent focus:outline-none text-gray-500 placeholder-gray-500 w-full"
+        />
+        <SearchIcon
+          color="inherit"
+          className="cursor-pointer"
+          onClick={searchExpense}
+        />
+      </div>
       <div className="w-full flex justify-center">
-        <div className="w-3/5 border-r border-gray-200 p-2 minhScreen">
-          {expenses.expenses.length > 0 &&
+        <div className="w-3/5 p-2 minhScreen">
+          {expenses.expenses.length > 0 ? (
             expenses.expenses.map((expense, index) => (
               <div
                 className="w-full hover:bg-gray-200 border border-gray-200 p-2 rounded-xl mt-2"
@@ -116,7 +150,10 @@ const Expenses = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <Empty title={"No Expenses Found"} />
+          )}
         </div>
       </div>
       {create && (

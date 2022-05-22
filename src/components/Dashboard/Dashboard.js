@@ -3,20 +3,40 @@ import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SHOW_ALL_RECIEPT_EXPENSES } from "../../constants/action.constants";
+import {
+  SHOW_ALL_EXPENSES,
+  SHOW_ALL_RECIEPT_EXPENSES,
+} from "../../constants/action.constants";
 import { reportStoreSelector } from "../../store/stores.selector";
 import ButtonField from "../shared components/Button/Button";
 import Loader from "../shared components/Loader/Loader";
 import PDFDocument from "../shared components/PDFDocument/PDFDocument";
+import SearchIcon from "@mui/icons-material/Search";
+import { ROUTES } from "../../constants/Routes";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add(1, "month"));
+  const [searchText, setSearchText] = useState("");
   const reportStore = useSelector(reportStoreSelector);
   useEffect(() => {
     if (!reportStore.isRecieptExpensesLoaded) handleRecieptChange();
   }, []);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const searchExpense = () => {
+    navigate(ROUTES.EXPENSES);
+    dispatch({
+      type: SHOW_ALL_EXPENSES,
+      payload: {
+        filters: {
+          title: searchText,
+        },
+      },
+    });
+  };
   const handleRecieptChange = () => {
     if (startDate && endDate) {
       const start = moment(startDate);
@@ -34,6 +54,23 @@ const Dashboard = () => {
   };
   return (
     <div>
+      <div className="bg-gray-300 rounded-2xl px-2 p-1 text-gray-500 items-center mt-5 flex justify-between mx-5">
+        <input
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Search Expense"
+          autoComplete="off"
+          onChange={(event) => setSearchText(event.target.value)}
+          value={searchText}
+          className="rounded-lg p-1 bg-transparent focus:outline-none text-gray-500 placeholder-gray-500 w-full"
+        />
+        <SearchIcon
+          color="inherit"
+          className="cursor-pointer"
+          onClick={searchExpense}
+        />
+      </div>
       <div className="my-10">
         <div className="text-3xl text-primary text-center p-10">
           Create Reports
