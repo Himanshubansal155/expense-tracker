@@ -9,6 +9,8 @@ import Firebase from "./services/firebase.service";
 import { initializeApp } from "firebase/app";
 import Loader from "./components/shared components/Loader/Loader";
 import "./scss/Main.scss";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem(AUTH_TOKEN);
@@ -26,10 +28,12 @@ function App() {
     return <Loader />;
   }
   return (
-    <Suspense fallback={<Loader />}>
-      <NotificationContainer />
-      <NavigationPage />
-    </Suspense>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <Suspense fallback={<Loader />}>
+        <NotificationContainer />
+        <NavigationPage />
+      </Suspense>
+    </LocalizationProvider>
   );
 }
 
