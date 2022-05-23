@@ -72,13 +72,13 @@ const PDFDocument = ({ expenses, message }) => {
                 User Expenses
               </Text>
               <Text style={{ fontSize: 12, color: COLORS.darkPrimary }}>
-                User Name : {userStore.data.name}
+                User Name : {userStore?.data?.name}
               </Text>
               <Text style={{ fontSize: 12, color: COLORS.darkPrimary }}>
-                User Email : {userStore.data.email}
+                User Email : {userStore?.data?.email}
               </Text>
               <Text style={{ fontSize: 12, color: COLORS.darkPrimary }}>
-                User Phone : {userStore.data.phone}
+                User Phone : {userStore?.data?.phone}
               </Text>
               <Text
                 style={{
@@ -103,7 +103,6 @@ const PDFDocument = ({ expenses, message }) => {
                       marginTop: 8,
                     }}
                   >
-                    {/* <Text style={styles.snoStyle}>{index + 1}.</Text> */}
                     <View style={{ flexDirection: "row" }}>
                       <View>
                         <Text style={styles.nameStyle}>{expense.title}</Text>
@@ -131,9 +130,6 @@ const PDFDocument = ({ expenses, message }) => {
                     <Text style={{ fontSize: 8, color: COLORS.primary }}>
                       {expense.meta.url}
                     </Text>
-                    {/* <a href={expense.meta.url} download="test.pdf">
-                      Download
-                    </a> */}
                   </View>
                 ))}
               </>

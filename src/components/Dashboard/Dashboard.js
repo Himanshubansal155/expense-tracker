@@ -115,10 +115,10 @@ const Dashboard = () => {
           </div>
           <div className="flex flex-col justify-center items-center w-48 sm:w-60 md:ml-10 mt-10">
             <div className="px-1 p-2 border-4 border-primary italic rounded-lg w-full text-center text-primary">
-              Rs. 2000000 today
+              Rs. 200 today
             </div>
             <div className="px-1 p-2 border-4 border-primary italic rounded-lg w-full mt-2 text-center text-primary">
-              Rs. 2000000 Yesterday
+              Rs. 102 Yesterday
             </div>
             <div className="w-full text-left text-primary">
               <span

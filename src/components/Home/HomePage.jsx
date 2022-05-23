@@ -1,12 +1,8 @@
 import React from "react";
-import PDFDocument from "../shared components/PDFDocument/PDFDocument";
+import "./homepage.scss";
 
 const HomePage = () => {
-  return (
-    <div>
-      <PDFDocument />
-    </div>
-  );
+  return <div className="bgImage bg-cover"></div>;
 };
 
 export default HomePage;
