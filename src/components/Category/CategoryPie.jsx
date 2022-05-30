@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { VictoryLabel, VictoryPie, VictoryTheme } from "victory";
-import { SHOW_ALL_RECIEPT_EXPENSES } from "../../constants/action.constants";
+import { SHOW_ALL_CATEGORIES_PIE, SHOW_ALL_RECIEPT_EXPENSES } from "../../constants/action.constants";
 import { categoryStoreSelector } from "../../store/stores.selector";
 import ButtonField from "../shared components/Button/Button";
 import { map, uniqBy } from "lodash";
@@ -24,7 +24,7 @@ const CategoryPie = () => {
       const start = moment(startDate);
       const end = moment(endDate);
       dispatch({
-        type: SHOW_ALL_RECIEPT_EXPENSES,
+        type: SHOW_ALL_CATEGORIES_PIE,
         payload: {
           filters: {
             startDate: start.toString(),

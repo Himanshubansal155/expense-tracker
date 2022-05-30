@@ -128,7 +128,7 @@ const PDFDocument = ({ expenses, message }) => {
                       </View>
                     </View>
                     <Text style={{ fontSize: 8, color: COLORS.primary }}>
-                      {expense.meta.url}
+                      {expense?.meta?.url}
                     </Text>
                   </View>
                 ))}
