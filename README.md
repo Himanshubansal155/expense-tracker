@@ -12,5 +12,5 @@ https://github.com/Himanshubansal155/expense-tracker-backend
 
 # Live Link 
 
-## Frotend
+## Frontend
 https://expense-9458-tracker.netlify.app/
