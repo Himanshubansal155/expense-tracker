@@ -1,9 +1,9 @@
 # Expense Income Tracker
 
 ## Team:
-  1. Himanshu Bansal (191500341)
-  2. Ronak Agrawal (191500678)
-  3. Lakshya Yadav (191500427)
+  1. Ronak Agrawal (191500678)
+  2. Govind Singh (191500307)
+  3. Haresh Singh (191500311)
 
 
 
